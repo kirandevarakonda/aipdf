@@ -24,6 +24,7 @@ type PDFPage = {
 
 export async function loadS3IntoPinecone(url: string, fileKey: string) {
     //obtain pdf
+    
     console.log('downling pdf to file sys')
 
     const file_name = await downloadFromS3(url);
