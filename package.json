@@ -18,6 +18,8 @@
     "@langchain/community": "^0.2.27",
     "@neondatabase/serverless": "^0.9.4",
     "@nextui-org/react": "^2.4.8",
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "@paypal/paypal-js": "^8.1.2",
     "@pinecone-database/doc-splitter": "^0.0.1",
     "@pinecone-database/pinecone": "^3.0.3",
     "@radix-ui/react-avatar": "^1.1.0",
@@ -66,6 +68,7 @@
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^20",
+    "@types/paypal__checkout-server-sdk": "^1.0.8",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^10.0.0",

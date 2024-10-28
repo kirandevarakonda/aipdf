@@ -418,6 +418,96 @@
 
 // export default ChatComponent;
 
+
+//Working component but delay
+// "use client";
+// import React, { useEffect, useRef } from "react";
+// import { useQuery } from "@tanstack/react-query";
+// import axios from "axios";
+// import { Input } from "./ui/input";
+// import { useChat } from "ai/react";
+// import { Button } from "./ui/button";
+// import { Send, MessagesSquare } from "lucide-react";
+// import MessageList from "./MessageList";
+// import { Message } from "ai";
+
+// type Props = { chatId: number };
+
+// const ChatComponent = ({ chatId }: Props) => {
+//   // Fetch existing messages when component mounts
+//   const { data, isLoading } = useQuery({
+//     queryKey: ["chat", chatId],
+//     queryFn: async () => {
+//       const response = await axios.post<Message[]>("/api/get-messages", {
+//         chatId,
+//       });
+//       return response.data;
+//     },
+//   });
+
+//   const { input, handleInputChange, handleSubmit, setInput, messages } = useChat({
+//     api: "/api/chat",
+//     body: {
+//       chatId,
+//     },
+//     initialMessages: data || [],
+//   });
+
+//   // Automatically send "Summarize the PDF" if no messages exist
+//   useEffect(() => {
+//     if (messages.length === 0 && !isLoading)  {
+//       setInput("Summarize the PDF");
+      
+//       handleSubmit();
+//     }
+//   }, [messages.length, setInput, handleSubmit, isLoading]);
+
+//   // Reference for auto-scrolling to the last message
+//   const lastMessageRef = useRef<HTMLDivElement | null>(null);
+
+//   useEffect(() => {
+//     if (lastMessageRef.current) {
+//       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+//     }
+//   }, [messages]);
+
+//   return (
+//     <div className="w-full h-full max-h-screen flex flex-col">
+//       {/* Header */}
+//       <div className="flex items-center justify-between p-4 bg-white shadow-md sticky top-0">
+//         <div className="flex items-center space-x-2">
+//           <MessagesSquare className="text-primary" />
+//           <h3 className="text-lg font-medium">Start Chatting</h3>
+//         </div>
+//       </div>
+
+//       {/* Message list */}
+//       <div className="flex-1 overflow-y-auto p-4 custom-scrollbar" id="message-container">
+//         <MessageList messages={messages} isLoading={isLoading} />
+//         <div ref={lastMessageRef} />
+//       </div>
+
+//       {/* Input section */}
+//       <div className="p-4 bg-white shadow-sm sticky bottom-0">
+//         <form onSubmit={handleSubmit} className="flex w-full items-center space-x-2">
+//           <Input
+//             value={input}
+//             onChange={handleInputChange}
+//             placeholder="Ask any question..."
+//             className="flex-1 bg-gray-100 focus:ring-0 focus:outline-none"
+//           />
+//           <Button type="submit" size="icon" className="bg-[#844af9]">
+//             <Send className="h-4 w-4 text-white" />
+//           </Button>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ChatComponent;
+
+
 "use client";
 import React, { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -453,10 +543,17 @@ const ChatComponent = ({ chatId }: Props) => {
 
   // Automatically send "Summarize the PDF" if no messages exist
   useEffect(() => {
-    if (messages.length === 0 && !isLoading)  {
-      setInput("Summarize the PDF");
-      handleSubmit();
-    }
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const autoSummarize = async () => {
+      if (messages.length === 0 && !isLoading) {
+        await sleep(2000); // 2-second delay
+        setInput("Summarize the PDF");
+        handleSubmit();
+      }
+    };
+
+    autoSummarize();
   }, [messages.length, setInput, handleSubmit, isLoading]);
 
   // Reference for auto-scrolling to the last message
