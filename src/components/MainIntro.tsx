@@ -166,6 +166,7 @@ import FileUpload from "./FileUpload";
 import vector from "../../public/vector.svg";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { LogInIcon, ArrowRight } from "lucide-react";
 
 const MainIntro = ({ isAuth }: { isAuth: boolean }) => {
   return (
@@ -228,6 +229,17 @@ const MainIntro = ({ isAuth }: { isAuth: boolean }) => {
           </div>
         </div>
       )}
+      {/* <div className="flex mt-2">
+            {isAuth && firstChat && (
+              <>
+                <Link href={`/chat/${firstChat.id}`}>
+                  <Button>
+                    Go to Chats <ArrowRight className="ml-2" />
+                  </Button>
+                </Link>
+              </>
+            )}
+            </div> */}
     </div>
   );
 };

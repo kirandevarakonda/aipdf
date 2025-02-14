@@ -395,6 +395,17 @@ export default async function Home() {
       </div>
       {/* Other Sections */}
       <MainIntro isAuth={isAuth}/>
+      <div className="flex mt-2">
+            {isAuth && firstChat && (
+              <>
+                <Link href={`/chat/${firstChat.id}`}>
+                  <Button>
+                    Go to Chats <ArrowRight className="ml-2" />
+                  </Button>
+                </Link>
+              </>
+            )}
+            </div>
       <MainIntro2 />
       <MainIntro3 />
       <MainIntro4 />
