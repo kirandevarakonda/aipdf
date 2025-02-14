@@ -234,6 +234,7 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import checkMark from "../../public/frame.svg";
+import { Button } from "./ui/button";
 
 const plans = [
   {
@@ -383,9 +384,9 @@ const MainIntro5 = () => {
                     <span className="font-normal text-lg text-gray-400">/month</span>
                   </div>
                   <div className="pt-6">
-                    <button className="w-full p-2 rounded-xl bg-customPurple hover:bg-blue-500 text-white transform transition-all duration-300 hover:scale-105">
+                  <Button className="w-full p-2 rounded-xl hover:bg-purple-600 text-white transform transition-all duration-300 hover:scale-105">
                       Get started
-                    </button>
+                    </Button>
                   </div>
                   <div className="pt-6 space-y-2">
                     {plan.features.map((feature, i) => (
@@ -411,9 +412,9 @@ const MainIntro5 = () => {
                   <span className="font-normal text-lg text-gray-400">/month</span>
                 </div>
                 <div className="pt-6">
-                  <button className="w-full p-2 rounded-xl bg-customPurple hover:bg-blue-500 text-white transform transition-all duration-300 hover:scale-105">
-                    Get started
-                  </button>
+                <Button className="w-full p-2 rounded-xl hover:bg-purple-600 text-white transform transition-all duration-300 hover:scale-105">
+                      Get started
+                    </Button>
                 </div>
                 <div className="pt-6 space-y-2">
                   {plan.features.map((feature, i) => (

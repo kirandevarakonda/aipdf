@@ -122,6 +122,7 @@ import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/react"
 import {AcmeLogo} from "./Logo.jsx";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Pricing from "../app/pricing/page.jsx";
 
 export default function Topbar() {
   return (
