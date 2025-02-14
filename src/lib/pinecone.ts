@@ -49,7 +49,7 @@ export async function loadS3IntoPinecone(url: string, fileKey: string) {
     // upload to pinecone
 
     const client = await getPineconeClient();
-    const pineconeIndex = client.Index('aipdf');
+    const pineconeIndex = client.Index('aipdftest');
 
     const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
 
@@ -59,12 +59,6 @@ export async function loadS3IntoPinecone(url: string, fileKey: string) {
     await namespace.upsert(vectors);
 
     return documents[0];
-
-
-
-
-
-
 
 }
 

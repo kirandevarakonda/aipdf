@@ -395,7 +395,7 @@ export default async function Home() {
       </div>
       {/* Other Sections */}
       <MainIntro isAuth={isAuth}/>
-      <div className="flex mt-2">
+      {/* <div className="flex mt-2">
             {isAuth && firstChat && (
               <>
                 <Link href={`/chat/${firstChat.id}`}>
@@ -405,7 +405,7 @@ export default async function Home() {
                 </Link>
               </>
             )}
-            </div>
+            </div> */}
       <MainIntro2 />
       <MainIntro3 />
       <MainIntro4 />
