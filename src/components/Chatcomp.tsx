@@ -141,7 +141,7 @@ export function Chatcomp({ chatId }: Props) {
   }, [messages]);
 
   return (
-    <Card className="flex flex-col h-[80vh]">
+    <Card className="flex flex-col h-[80vh] pt-10">
       <CardHeader className="flex flex-row items-center">
         <div className="flex items-center space-x-4">
           <Avatar>

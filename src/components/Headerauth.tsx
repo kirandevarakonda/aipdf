@@ -120,51 +120,79 @@
 import React from "react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/react";
 import Link from "next/link";
-import {AcmeLogo} from "./Logo.jsx";
 import { Button } from "@/components/ui/button";
 import { UserButton, useUser } from "@clerk/nextjs";
+import Image from "next/image";
+import aipdfchat from "../../public/aipdfchat.svg";
+import {AcmeLogo} from "../../public/logo";
+import UpgradeImage from "../../public/lightning01.svg";
+import DownArrow from "../../public/arrow--chevron-down.svg";
+import ProfilePic from "../../public/ellipse-11@2x.png";
 
 export default function Topbar1() {
   return (
-    <Navbar isBordered isBlurred={false} className="sticky top-0 z-50 bg-white py-3 px-16">
-      <Link href = "/"><NavbarBrand className="gap-4">
-        <div className = "gap-y-10">
-        <AcmeLogo />
-        </div>
-        {/* <AcmeLogo /> */}
-        <p className="font-bold text-inherit text-4xl">aipdf.chat</p>
-      </NavbarBrand>
-      </Link>
-      <NavbarContent className="hidden sm:flex flex-wrap-reverse gap-4 font-semibold " justify="start">
-        <NavbarItem>
-          <Link color="foreground" href="#">
+    <>
+     {/* <Navbar isBordered isBlurred={false} className="sticky top-0 z-50 bg-white py-3 px-16">
+       <Link href = "/"><NavbarBrand className="gap-4">
+         <div className = "gap-y-10">
+         <AcmeLogo />
+         </div>
+         {/* <AcmeLogo /> 
+         <p className="font-bold text-inherit text-4xl">aipdf.chat</p>
+       </NavbarBrand>
+       </Link>
+       <NavbarContent className="hidden sm:flex flex-wrap-reverse gap-4 font-semibold " justify="start">
+         <NavbarItem>
+           <Link color="foreground" href="#">
             My Documents
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            My Chats
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Multi-Dociment Chat
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link className="text-amber-600" href="#">
-            Upgrade
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent>
-        <NavbarItem className="px-4">  
-        <div className="absolute top-4 right-5">
+           </Link>
+         </NavbarItem>
+         <NavbarItem isActive>
+           <Link href="#" aria-current="page">
+             My Chats
+           </Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Link color="foreground" href="#">
+             Multi-Dociment Chat
+           </Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Link className="text-amber-600" href="#">
+             Upgrade
+           </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent>
+         <NavbarItem className="px-4">  
+         <div className="absolute top-4 right-5">
 
-        <UserButton afterSwitchSessionUrl="/" />
-      </div>
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+         <UserButton afterSwitchSessionUrl="/" />
+       </div>
+         </NavbarItem>
+       </NavbarContent>
+     </Navbar> */}
+    <div className="fixed z-20 w-full">
+    <header className="bg-white h-[90px] ">
+      <div className="container mx-auto flex justify-evenly items-center py-4 pr-8">
+        <div className="flex items-center gap-5">
+          <AcmeLogo/>
+          <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer"/>
+        </div>
+        <div className="flex items-center">
+        <nav className="hidden m-6 md:flex space-x-6 text-gray-700 font-medium">
+          <a href="#" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Documents</a>
+          <a href="#" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Chats</a>
+          <a href="#" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Multi-Document Chat</a>
+          <a href="#" className="text-golden font-medium tracking-wide hover:font-bold hover:underline">Upgrade <Image src={UpgradeImage} alt="upgrade image" className="inline"></Image></a>
+        </nav>
+        </div>
+          <div className="flex items-center gap-2">
+            <UserButton afterSwitchSessionUrl="/" />
+          </div>
+        </div>
+    </header>
+    </div>
+    </>
   );
 }

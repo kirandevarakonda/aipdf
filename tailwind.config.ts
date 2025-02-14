@@ -19,6 +19,8 @@ const config = {
     },
     extend: {
       colors: {
+        customPurple:'#8043F9',
+        golden: "#D69D0B",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

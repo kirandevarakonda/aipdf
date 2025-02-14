@@ -368,7 +368,7 @@ import MainIntro7 from "../components/MainIntro7";
 import MainIntro8 from "../components/MainIntro8";
 import MainIntro9 from "../components/MainIntro9";
 import MainIntro10 from "../components/MainIntro10";
-import HeaderAuth from "../components/Headerauth"
+import HeaderAuth from "../components/Headerauth";
 import ChatComponent from "../components/ChatComponent";
 // import HeaderUpgrade from "../../components/HeaderUpgrade";
 
@@ -391,7 +391,7 @@ export default async function Home() {
   return (
     <div className="bg-white">
       <div className="flex">
-        {isAuth ? <HeaderAuth /> : <Header />}
+        {/* {isAuth ? <HeaderAuth /> : <Header />} */}
       </div>
       {/* Other Sections */}
       <MainIntro isAuth={isAuth}/>
