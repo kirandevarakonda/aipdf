@@ -253,8 +253,8 @@ export default function ChatPageContent({ chatId, initialChatsData }: ChatPageCo
         //         </div>
         //     </div>
         // </div>
-        <div className="relative top-16">
-    <div className="left-0 w-full flex overflow-auto h-[calc(100vh-80px)]">
+        <div className="relative pt-14">
+    <div className="left-0 w-full flex overflow-auto h-[calc(100vh-60px)]">
         
         {/* Sidebar */}
         <div className="flex-col py-8 items-start p-2 [background:linear-gradient(-75.83deg,_rgba(3,_121,_255,_0.16),_rgba(219,_101,_158,_0.16)_52.5%,_rgba(255,_128,_95,_0.16))] flex-1">
@@ -282,7 +282,7 @@ export default function ChatPageContent({ chatId, initialChatsData }: ChatPageCo
                         </Link> */}
                     </div>
                     <div className="flex-col overflow-hidden">
-                        <nav className="grid items-start px-2 text-sm font-medium lg:px-4 overflow-y-auto h-full chat-container gap-2">
+                        <nav className="grid items-start px-2 text-sm font-medium lg:px-1 overflow-y-auto h-full chat-container gap-2">
                             {chats.map((chat) => (
                                 <Link href={`/chat/${chat.id}`} key={chat.id}>
                                     <div
