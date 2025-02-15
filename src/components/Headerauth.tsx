@@ -173,8 +173,8 @@ export default function Topbar1() {
        </NavbarContent>
      </Navbar> */}
     <div className="fixed z-20 w-full">
-    <header className="bg-white h-[90px] ">
-      <div className="container mx-auto flex justify-evenly items-center py-4 pr-8">
+    <header className="bg-white h-[70px] items-center shadow-md">
+      <div className="container mx-auto flex justify-evenly items-center pr-8">
         <div className="flex items-center gap-5">
           <AcmeLogo/>
           <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer"/>
@@ -184,10 +184,10 @@ export default function Topbar1() {
           <a href="#" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Documents</a>
           <a href="#" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Chats</a>
           <a href="#" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Multi-Document Chat</a>
-          <a href="#" className="text-golden font-medium tracking-wide hover:font-bold hover:underline">Upgrade <Image src={UpgradeImage} alt="upgrade image" className="inline"></Image></a>
+          <a href="/pricing" className="text-golden font-medium tracking-wide hover:font-bold hover:underline">Upgrade <Image src={UpgradeImage} alt="upgrade image" className="inline"></Image></a>
         </nav>
         </div>
-          <div className="flex items-center gap-2">
+          <div className="flex pl-48 gap-2 ">
             <UserButton afterSwitchSessionUrl="/" />
           </div>
         </div>

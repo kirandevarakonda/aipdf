@@ -175,84 +175,160 @@ export default function ChatPageContent({ chatId, initialChatsData }: ChatPageCo
     };
 
     return (
-        <div className="relative">
-            {/* < Header1/> */}
+        // <div className="relative top-16">
+        //     {/* < Header1/> */}
 
-            <div className="sticky top-0 left-0 max-h-screen w-full flex overflow-auto">
+        //     <div className="left-0 max-h-screen w-full flex overflow-auto">
                 
-                {/* Sidebar toggle button */}
-                <div className="flex-col py-8 items-start p-2 [background:linear-gradient(-75.83deg,_rgba(3,_121,_255,_0.16),_rgba(219,_101,_158,_0.16)_52.5%,_rgba(255,_128,_95,_0.16))] flex-1">
-                    <Button variant="outline" size="icon" className="" onClick={toggleSidebar}>
-                        <Text className="h-5 w-5" />
+        //         {/* Sidebar toggle button */}
+        //         <div className="flex-col py-8 items-start p-2 [background:linear-gradient(-75.83deg,_rgba(3,_121,_255,_0.16),_rgba(219,_101,_158,_0.16)_52.5%,_rgba(255,_128,_95,_0.16))] flex-1">
+        //             <Button variant="outline" size="icon" className="" onClick={toggleSidebar}>
+        //                 <Text className="h-5 w-5" />
 
-                        <span className="sr-only">Toggle Sidebar</span>
-                    </Button>
+        //                 <span className="sr-only">Toggle Sidebar</span>
+        //             </Button>
                     
-                    <Link href="/">
-                    <Button variant="ghost" size="icon" className="py-11">
-                        <House className="h-5 w-5" />
-                    </Button>
-                    </Link>
-                </div>
+        //             <Link href="/">
+        //             <Button variant="ghost" size="icon" className="py-11">
+        //                 <House className="h-5 w-5" />
+        //             </Button>
+        //             </Link>
+        //         </div>
 
-                {/* Sidebar - now controlled by the sidebarOpen state */}
-                {sidebarOpen && ( // Only render the sidebar if sidebarOpen is true
-                    <div className="transition-all duration-300 border-r bg-muted/40 max-w-[400px] overflow-hidden">
-                        <div className="flex h-full max-h-screen flex-col gap-2">
-                            <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-                                <Link href="/" className="flex items-center gap-2 font-bold h-[100px] ml-1">
-                                    <AcmeLogo />
-                                    <span> aipdf.chat </span>
-                                </Link>
-                            </div>
-                            <div className="flex-col overflow-hidden">
-                                <nav className="grid items-start px-2 text-sm font-medium lg:px-4 overflow-y-auto h-full chat-container gap-2">
-                                    {chats.map((chat) => (
-                                        <Link href={`/chat/${chat.id}`} key={chat.id}>
-                                            <div
-                                                className={cn("rounded-lg p-3 text-black flex items-center", {
-                                                    "bg-[#844af9] text-white": chat.id === parseInt(chatId),
-                                                    "hover:text-black/80 hover:bg-[#41B3A2]/10": chat.id !== parseInt(chatId),
-                                                })}
-                                            >
-                                                <FileText className="mr-2" />
-                                                <div className="overflow-hidden w-full text-sm truncate whitespace-nowrap text-ellipsis max-w-[300px]">
-                                                    {chat.pdfName}
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    ))}
-                                </nav>
-                            </div>
-                        </div>
+        //         {/* Sidebar - now controlled by the sidebarOpen state */}
+        //         {sidebarOpen && ( // Only render the sidebar if sidebarOpen is true
+        //             <div className="transition-all duration-300 border-r bg-muted/40 max-w-[400px] overflow-hidden">
+        //                 <div className="flex h-full max-h-screen flex-col gap-2">
+        //                     <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+        //                         <Link href="/" className="flex items-center gap-2 font-bold h-[100px] ml-1">
+        //                             <AcmeLogo />
+        //                             <span> aipdf.chat </span>
+        //                         </Link>
+        //                     </div>
+        //                     <div className="flex-col overflow-hidden">
+        //                         <nav className="grid items-start px-2 text-sm font-medium lg:px-4 overflow-y-auto h-full chat-container gap-2">
+        //                             {chats.map((chat) => (
+        //                                 <Link href={`/chat/${chat.id}`} key={chat.id}>
+        //                                     <div
+        //                                         className={cn("rounded-lg p-3 text-black flex items-center", {
+        //                                             "bg-[#844af9] text-white": chat.id === parseInt(chatId),
+        //                                             "hover:text-black/80 hover:bg-[#41B3A2]/10": chat.id !== parseInt(chatId),
+        //                                         })}
+        //                                     >
+        //                                         <FileText className="mr-2" />
+        //                                         <div className="overflow-hidden w-full text-sm truncate whitespace-nowrap text-ellipsis max-w-[300px]">
+        //                                             {chat.pdfName}
+        //                                         </div>
+        //                                     </div>
+        //                                 </Link>
+        //                             ))}
+        //                         </nav>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         )}
+
+        //         {/* Main content */}
+        //         <div className="flex flex-col w-full">
+        //             <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 p-2 md:p-0">
+        //                 <div className="flex-1" />
+        //             </header>
+        //             <main className="flex flex-1 flex-col h-full">
+        //                 <div className="flex items-center justify-center h-full">
+        //                     <ResizablePanelGroup direction="horizontal" className="flex w-full h-full min-h-screen">
+        //                         <ResizablePanel>
+        //                             <div className="h-full">
+        //                                 <PDFViewer pdfUrl={currentChat?.pdfUrl || ''} />
+        //                             </div>
+        //                         </ResizablePanel>
+        //                         <ResizableHandle withHandle />
+        //                         <ResizablePanel>
+        //                             <div className="h-full">
+        //                                 <ChatComponent chatId={parseInt(chatId)} />
+        //                             </div>
+        //                         </ResizablePanel>
+        //                     </ResizablePanelGroup>
+        //                 </div>
+        //             </main>
+        //         </div>
+        //     </div>
+        // </div>
+        <div className="relative top-16">
+    <div className="left-0 w-full flex overflow-auto h-[calc(100vh-80px)]">
+        
+        {/* Sidebar */}
+        <div className="flex-col py-8 items-start p-2 [background:linear-gradient(-75.83deg,_rgba(3,_121,_255,_0.16),_rgba(219,_101,_158,_0.16)_52.5%,_rgba(255,_128,_95,_0.16))] flex-1">
+            <Button variant="outline" size="icon" onClick={toggleSidebar}>
+                <Text className="h-5 w-5" />
+                <span className="sr-only">Toggle Sidebar</span>
+            </Button>
+            
+            <Link href="/">
+                <Button variant="ghost" size="icon" className="py-11">
+                    <House className="h-5 w-5" />
+                </Button>
+            </Link>
+        </div>
+
+        {/* Sidebar - now controlled by the sidebarOpen state */}
+        {sidebarOpen && (
+            <div className="transition-all duration-300 border-r bg-muted/40 max-w-[400px] overflow-hidden h-[calc(100vh-80px)]">
+                <div className="flex h-full flex-col gap-2">
+                    <div className="flex h-10 items-center border-b px-4 lg:h-[40px] lg:px-6 font-sans font-bold">
+                        Chats
+                        {/* <Link href="/" className="flex items-center gap-2 font-bold h-[100px] ml-1">
+                            <AcmeLogo />
+                            <span> aipdf.chat </span>
+                        </Link> */}
                     </div>
-                )}
-
-                {/* Main content */}
-                <div className="flex flex-col w-full">
-                    <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 p-2 md:p-0">
-                        <div className="flex-1" />
-                    </header>
-                    <main className="flex flex-1 flex-col h-full">
-                        <div className="flex items-center justify-center h-full">
-                            <ResizablePanelGroup direction="horizontal" className="flex w-full h-full min-h-screen">
-                                <ResizablePanel>
-                                    <div className="h-full">
-                                        <PDFViewer pdfUrl={currentChat?.pdfUrl || ''} />
+                    <div className="flex-col overflow-hidden">
+                        <nav className="grid items-start px-2 text-sm font-medium lg:px-4 overflow-y-auto h-full chat-container gap-2">
+                            {chats.map((chat) => (
+                                <Link href={`/chat/${chat.id}`} key={chat.id}>
+                                    <div
+                                        className={cn("rounded-lg p-3 text-black flex items-center", {
+                                            "bg-[#844af9] text-white": chat.id === parseInt(chatId),
+                                            "hover:text-black/80 hover:bg-[#41B3A2]/10": chat.id !== parseInt(chatId),
+                                        })}
+                                    >
+                                        <FileText className="mr-2" />
+                                        <div className="overflow-hidden w-full text-sm truncate whitespace-nowrap text-ellipsis max-w-[300px]">
+                                            {chat.pdfName}
+                                        </div>
                                     </div>
-                                </ResizablePanel>
-                                <ResizableHandle withHandle />
-                                <ResizablePanel>
-                                    <div className="h-full">
-                                        <ChatComponent chatId={parseInt(chatId)} />
-                                    </div>
-                                </ResizablePanel>
-                            </ResizablePanelGroup>
-                        </div>
-                    </main>
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
                 </div>
             </div>
+        )}
+
+        {/* Main content */}
+        <div className="flex flex-col w-full">
+            <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 p-2 md:p-0">
+                <div className="flex-1" />
+            </header>
+            <main className="flex flex-1 flex-col h-[calc(100vh-80px)]">
+                <div className="flex items-center justify-center h-full">
+                    <ResizablePanelGroup direction="horizontal" className="flex w-full h-full">
+                        <ResizablePanel>
+                            <div className="h-full">
+                                <PDFViewer pdfUrl={currentChat?.pdfUrl || ''} />
+                            </div>
+                        </ResizablePanel>
+                        <ResizableHandle withHandle />
+                        <ResizablePanel>
+                            <div className="h-full">
+                                <ChatComponent chatId={parseInt(chatId)} />
+                            </div>
+                        </ResizablePanel>
+                    </ResizablePanelGroup>
+                </div>
+            </main>
         </div>
+    </div>
+</div>
     );
 }
 

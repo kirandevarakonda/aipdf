@@ -183,8 +183,8 @@ export default function Topbar() {
 //       </NavbarContent>
 //     </Navbar>
 <div className="fixed z-20 w-full">
-    <header className="bg-white h-[90px] ">
-      <div className="container mx-auto flex justify-between items-center py-4 pl-24 pr-8">
+    <header className="bg-white h-[70px] items-center shadow-md">
+      <div className="container mx-auto flex justify-between items-center pl-24 pr-8">
         <div className="flex items-center gap-5">
           <AcmeLogo/>
           <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer"/>
