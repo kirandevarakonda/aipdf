@@ -376,7 +376,7 @@ import ChatComponent from "../components/ChatComponent";
 import type { NextPage } from "next";
 
 export default async function Home() {
-  const { userId } = await auth();
+  const { userId } = auth();
   console.log(userId);
   const isAuth = !!userId;
   const isPro = await checkSubscription();
@@ -391,7 +391,7 @@ export default async function Home() {
   return (
     <div className="bg-white">
       <div className="flex">
-        {/* {isAuth ? <HeaderAuth /> : <Header />} */}
+        {isAuth ? <HeaderAuth /> : <Header />}
       </div>
       {/* Other Sections */}
       <MainIntro isAuth={isAuth}/>

@@ -129,7 +129,7 @@ import UpgradeImage from "../../public/lightning01.svg";
 import DownArrow from "../../public/arrow--chevron-down.svg";
 import ProfilePic from "../../public/ellipse-11@2x.png";
 
-export default function Topbar1() {
+export default function HeaderAuth() {
   return (
     <>
      {/* <Navbar isBordered isBlurred={false} className="sticky top-0 z-50 bg-white py-3 px-16">

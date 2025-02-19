@@ -151,6 +151,7 @@ import {
 } from "@/components/ui/resizable";
 import { AcmeLogo } from "@/components/Logo";
 import Header1 from "@/components/Headerauth";
+import PdfViewer from "@/components/PDFViewer";
 
 type Chat = {
     id: number;
@@ -314,7 +315,8 @@ export default function ChatPageContent({ chatId, initialChatsData }: ChatPageCo
                     <ResizablePanelGroup direction="horizontal" className="flex w-full h-full">
                         <ResizablePanel>
                             <div className="h-full">
-                                <PDFViewer pdfUrl={currentChat?.pdfUrl || ''} />
+                                <PDFViewer pdfUrl={currentChat?.pdfUrl || ''}/>
+                                {/* <PdfViewer pdfUrl={"c:/Users/Kiran/Downloads/Record.pdf"}/> */}
                             </div>
                         </ResizablePanel>
                         <ResizableHandle withHandle />

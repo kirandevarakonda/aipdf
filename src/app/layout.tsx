@@ -1,17 +1,80 @@
+//header in layout
+// import type { Metadata } from "next";
+// import { Inter } from "next/font/google";
+// import "./globals.css";
+// import FileUpload from "../components/FileUpload";
+// import { Button } from "../components/ui/button";
+// // import { UserButton, useUser } from "@clerk/nextjs";
+// import { auth, currentUser } from "@clerk/nextjs/server";
+// import { LogInIcon, ArrowRight } from "lucide-react";
+// import Link from "next/link";
+// import { checkSubscription } from "@/lib/subscription";
+// import SubscriptionButton from "../components/SubscriptionButton";
+// import { db } from "@/lib/db";
+// import { chats } from "@/lib/db/schema";
+// import { eq } from "drizzle-orm";
+// import {
+//   ClerkProvider,
+//   SignInButton,
+//   SignedIn,
+//   SignedOut,
+//   UserButton
+// } from '@clerk/nextjs'
+// import Provider from "@/components/Provider";
+// import { Toaster } from "react-hot-toast";
+// import Header from "../components/Header"
+// import HeaderAuth from "../components/Headerauth";
+
+// const inter = Inter({ subsets: ["latin"] });
+
+// export const metadata: Metadata = {
+//   title: "ChatWithPdf App",
+// };
+
+// export default async function RootLayout({
+//   children,
+// }: Readonly<{
+//   children: React.ReactNode;
+// }>) {
+//   const { userId } = auth();
+//     console.log(userId);
+//     const isAuth = !!userId;
+//     const isPro = await checkSubscription();
+//     let firstChat;
+    
+//     if (userId) {
+//       firstChat = await db.select().from(chats).where(eq(chats.userId, userId));
+//       if (firstChat) {
+//         firstChat = firstChat[0];
+//       }
+//     }
+//   return (
+//     <ClerkProvider>
+//       <Provider>
+//         <html lang="en">
+//           <body className={inter.className}>
+//           {/* {isAuth ? <HeaderAuth /> : <Header />} */}
+
+//             {children}
+
+
+//             <Toaster />
+//           </body>
+//         </html>
+
+//       </Provider>
+//     </ClerkProvider>
+
+//   );
+// }
+
+
+//layout without header
+// 
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import FileUpload from "../components/FileUpload";
-import { Button } from "../components/ui/button";
-// import { UserButton, useUser } from "@clerk/nextjs";
-import { auth, currentUser } from "@clerk/nextjs/server";
-import { LogInIcon, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { checkSubscription } from "@/lib/subscription";
-import SubscriptionButton from "../components/SubscriptionButton";
-import { db } from "@/lib/db";
-import { chats } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
 import {
   ClerkProvider,
   SignInButton,
@@ -21,8 +84,6 @@ import {
 } from '@clerk/nextjs'
 import Provider from "@/components/Provider";
 import { Toaster } from "react-hot-toast";
-import Header from "../components/Header"
-import HeaderAuth from "../components/Headerauth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,29 +91,17 @@ export const metadata: Metadata = {
   title: "ChatWithPdf App",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { userId } = await auth();
-    console.log(userId);
-    const isAuth = !!userId;
-    const isPro = await checkSubscription();
-    let firstChat;
-    
-    if (userId) {
-      firstChat = await db.select().from(chats).where(eq(chats.userId, userId));
-      if (firstChat) {
-        firstChat = firstChat[0];
-      }
-    }
   return (
     <ClerkProvider>
       <Provider>
+
         <html lang="en">
           <body className={inter.className}>
-          {isAuth ? <HeaderAuth /> : <Header />}
 
             {children}
 
@@ -66,6 +115,7 @@ export default async function RootLayout({
 
   );
 }
+
 
 
 // import { authOptions } from '../../pages/api/auth/[...nextauth]';

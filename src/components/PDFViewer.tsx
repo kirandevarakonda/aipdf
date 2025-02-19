@@ -1,27 +1,27 @@
-import React from "react";
+// import React from "react";
 
-type Props = { pdfUrl: string };
+// type Props = { pdfUrl: string };
 
-const PDFViewer = ({ pdfUrl }: Props) => {
-    return (
-        // <iframe
-        //     src={`https://docs.google.com/gview?url=${pdfUrl}&embedded=true`}
-        //     className="w-full h-full"
-        // ></iframe>
+// const PDFViewer = ({ pdfUrl }: Props) => {
+//     return (
+//         // <iframe
+//         //     src={`https://docs.google.com/gview?url=${pdfUrl}&embedded=true`}
+//         //     className="w-full h-full"
+//         // ></iframe>
 
-        <div className="h-full">
-            <embed
-                src={pdfUrl}
-                type="application/pdf"
-                width="100%"
-                height="100%"
-                title="Embedded PDF Viewer"
-            />
-        </div>
-    );
-};
+//         <div className="h-full">
+//             <embed
+//                 src={pdfUrl}
+//                 type="application/pdf"
+//                 width="100%"
+//                 height="100%"
+//                 title="Embedded PDF Viewer"
+//             />
+//         </div>
+//     );
+// };
 
-export default PDFViewer;
+// export default PDFViewer;
 
 // // "use client";
 // // import { Viewer, Worker } from "@react-pdf-viewer/core";
@@ -79,8 +79,10 @@ export default PDFViewer;
 // export default PDFViewer;
 
 
-// // Core viewer
-// import { Viewer } from '@react-pdf-viewer/core';
+//module nor found error
+// 'use client'
+// // // Core viewer
+// import { Worker, Viewer } from '@react-pdf-viewer/core';
 
 // // Plugins
 // import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
@@ -90,16 +92,31 @@ export default PDFViewer;
 // import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 // // Create new plugin instance
-// const defaultLayoutPluginInstance = defaultLayoutPlugin();
+// // const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
+// import {  GlobalWorkerOptions } from "pdfjs-dist";
+
+// const workerUrl = GlobalWorkerOptions.workerSrc = new URL(
+//   "pdfjs-dist/build/pdf.worker.min.mjs",
+// // "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
+//   import.meta.url
+// ).toString();
+
+// // const workerUrl = new URL(
+// //     'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js',
+// //     import.meta.url,
+// //     ).toString();
 
 
 // type Props = { pdfUrl: string };
 
 // const PDFViewer = ({ pdfUrl }: Props) => {
+//   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
 //     return (
 //         <div>
 //             {/* Custom Top Bar */}
+//             <Worker workerUrl={workerUrl}>
 //             <Viewer
 //             fileUrl= {pdfUrl}
 //             plugins={[
@@ -107,58 +124,88 @@ export default PDFViewer;
 //                 defaultLayoutPluginInstance,
 //             ]}
 // />
+// </Worker>
 //         </div>
 //     );
 // };
 
 // export default PDFViewer;
 
-//pdfjs
-// import "react-pdf/dist/Page/TextLayer.css";
-// import "react-pdf/dist/Page/AnnotationLayer.css";
-// import { useState } from "react";
-// import { Document, Page } from "react-pdf";
-// import { PdfProps } from "../../types";
-// import { pdfjs } from "react-pdf";
+//working with default plugins
+import { Worker, Viewer } from '@react-pdf-viewer/core';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
-// pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+// Import styles
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+
+// Manually set the worker URL
+import { GlobalWorkerOptions } from 'pdfjs-dist';
+
+GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+type Props = { pdfUrl: string };
+
+const PDFViewer = ({ pdfUrl }: Props) => {
+    const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
+    return (
+        <div className="h-full w-full">
+            <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js">
+                <Viewer fileUrl={pdfUrl} plugins={[defaultLayoutPluginInstance]}/>
+            </Worker>
+        </div>
+    );
+};
+
+export default PDFViewer;
+
+
+// import { Worker, Viewer } from '@react-pdf-viewer/core';
+// import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
+// import { zoomPlugin } from '@react-pdf-viewer/zoom';
+// import { scrollModePlugin } from '@react-pdf-viewer/scroll-mode';
+
+// // Import styles
+// import '@react-pdf-viewer/core/lib/styles/index.css';
+// import '@react-pdf-viewer/toolbar/lib/styles/index.css';
+// import '@react-pdf-viewer/zoom/lib/styles/index.css';
+// import '@react-pdf-viewer/scroll-mode/lib/styles/index.css';
+
+// // Set PDF worker globally
+// import { GlobalWorkerOptions } from 'pdfjs-dist';
+// GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 // type Props = { pdfUrl: string };
 
-// export default function PDFViewer({ pdfUrl }: Props) {
-//   const [numPages, setNumPages] = useState<number>();
-//   const [pageNumber, setPageNumber] = useState<number>(1);
+// const PDFViewer = ({ pdfUrl }: Props) => {
+//     // Initialize plugins
+//     const toolbarPluginInstance = toolbarPlugin();
+//     const zoomPluginInstance = zoomPlugin();
+//     const scrollModePluginInstance = scrollModePlugin();
 
-//   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-//     setNumPages(numPages);
-//   }
+//     return (
+//         <div className="h-full w-full flex flex-col">
+//             {/* Toolbar */}
+//             <div className="p-2 bg-gray-100">
+//                 <toolbarPluginInstance.Toolbar />
+//             </div>
 
-//   function nextPage() {
-//     setPageNumber((v) => ++v);
-//   }
+//             {/* PDF Viewer */}
+//             <div className="flex-1 overflow-hidden">
+//                 <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js">
+//                     <Viewer
+//                         fileUrl={pdfUrl}
+//                         plugins={[
+//                             toolbarPluginInstance,
+//                             zoomPluginInstance,
+//                             scrollModePluginInstance,
+//                         ]}
+//                     />
+//                 </Worker>
+//             </div>
+//         </div>
+//     );
+// };
 
-//   function prevPage() {
-//     setPageNumber((v) => --v);
-//   }
-
-//   return (
-//     <div style={{ width: "100%", height: "100%" }}>
-//       <button onClick={prevPage} disabled={pageNumber <= 1}>
-//         Previous
-//       </button>
-//       <button onClick={nextPage} disabled={pageNumber >= (numPages ?? -1)}>
-//         Next
-//       </button>
-//       <Document
-//         file={pdfUrl}
-//         onLoadSuccess={onDocumentLoadSuccess}
-//         className="my-react-pdf"
-//       >
-//         <Page pageNumber={pageNumber} />
-//       </Document>
-//       <p>
-//         Page {pageNumber} of {numPages}
-//       </p>
-//     </div>
-//   );
-// }
+// export default PDFViewer;

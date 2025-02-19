@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import ChatPageContent from './ChatPageContent';
 import { getChatsData } from './chatUtils';
 import { Slab } from 'react-loading-indicators';
+import HeaderAuth from '@/components/Headerauth';
 
 type Props = {
     params: {
@@ -15,6 +16,8 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
 
     return (
         // Wrap the ChatPageContent in Suspense for client-side lazy loading or rendering
+        <div>
+            <HeaderAuth />
         <div className="h-screen overflow-hidden ">
             <Suspense
                 fallback={
@@ -26,6 +29,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
                 {/* Pass server-side data to the component */}
                 <ChatPageContent chatId={chatId} initialChatsData={chatsData} />
             </Suspense>
+        </div>
         </div>
     );
 };
