@@ -25,7 +25,7 @@
 
 //   return (
 //     <div
-//       className={`absolute top-[0px] left-[0px] w-[1920px] h-[90px] text-left text-base text-black font-inter ${className}`}
+//       className={absolute top-[0px] left-[0px] w-[1920px] h-[90px] text-left text-base text-black font-inter ${className}}
 //     >
 //       <div
 //         className="absolute h-[55.56%] w-[12.33%] top-[22.22%] right-[71.26%] bottom-[22.22%] left-[16.41%] cursor-pointer"
@@ -97,7 +97,7 @@
 //   }, [router]);
 
 //   return (
-//     <div className={`w-full h-[90px] flex items-center justify-between px-8 bg-white ${className}`}>
+//     <div className={w-full h-[90px] flex items-center justify-between px-8 bg-white ${className}}>
 //       <Link href="/AIPDFChat">
 //         <img className="h-full" alt="" src="/group-55.svg" />
 //       </Link>
@@ -116,14 +116,15 @@
 // };
 
 // export default Header;
-
+"use client"
 import React from "react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/react";
 import {AcmeLogo} from "../../public/logo";
 import Image from "next/image";
 import aipdfchat from "../../public/aipdfchat.svg";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+ import Link from "next/link";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 import Pricing from "../app/pricing/page.jsx";
 
 export default function Topbar() {
@@ -191,10 +192,10 @@ export default function Topbar() {
         </div>
         <div className="flex items-center">
         <nav className="hidden m-6 md:flex space-x-6 text-gray-700 font-medium">
-          <Link href="#features" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Features</Link>
-          <Link href="#usecases" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Use Case</Link>
-          <Link href="#pricing" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Pricing</Link>
-          <Link href="#affiliates" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Affiliates</Link>
+          <AnchorLink href="#features" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Features</AnchorLink>
+          <AnchorLink href="#usecases" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Use Case</AnchorLink>
+          <Link href="/pricing" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Pricing</Link>
+          <AnchorLink href="#affiliates" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Affiliates</AnchorLink>
         </nav>
         <Link href="/sign-in">
           <button className="px-5 py-2 bg-customPurple text-white rounded-lg shadow-md hover:bg-blue-500 transition">

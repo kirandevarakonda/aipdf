@@ -10,7 +10,7 @@ export default function Pricing() {
         <div className="pricing">
         <Header />
         {/* <MainIntro4/> */}
-        <div className="pt-5">
+        <div className="pt-14">
         <div className="mt-2 p-1">
           <div className="flex flex-col justify-center items-center">
             <span className="text-purple-600 font-medium text-3xl pt-4">Pricing✨</span>

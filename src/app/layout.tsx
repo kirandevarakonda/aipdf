@@ -88,7 +88,7 @@ import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ChatWithPdf App",
+  title: "aipdf.chat",
 };
 
 export default function RootLayout({

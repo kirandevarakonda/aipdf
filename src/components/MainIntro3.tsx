@@ -54,7 +54,7 @@ import Image from "next/image";
 const MainIntro3 = () => {
   return (
     <>
-      <div className="flex justify-center mt-16">
+      <div id="usecases" className="flex justify-center mt-16">
         <div className="bg-gradient-to-l from-[rgba(3,121,255,0.1608)] via-[rgba(183,75,221,0.1608)] to-[rgba(255,128,95,0.1608)] min-w-[85%] border-2 rounded-3xl">
           <div className="flex flex-col gap-2 items-center justify-center mt-12 mb-5">
             <div>

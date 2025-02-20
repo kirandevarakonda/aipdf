@@ -189,7 +189,7 @@ import icon4 from "../../public/frame7.svg";
 
 const MainIntro10 = () => {
   return (
-    <div className="mt-20 w-full relative">
+    <div id="affiliates" className="mt-20 w-full relative">
       {/* Gradient Section */}
       <div className="flex justify-center items-center relative z-10">
         <div className="bg-[linear-gradient(291.39deg,#0379FF_22.79%,#B74BDD_50%,#FF805F_77.21%)] 
