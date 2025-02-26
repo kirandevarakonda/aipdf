@@ -181,7 +181,7 @@ export default function HeaderAuth() {
         </div>
         <div className="flex items-center">
         <nav className="hidden m-6 md:flex space-x-6 text-gray-700 font-medium">
-          <a href="#" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Documents</a>
+          <a href="/my-chats" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Documents</a>
           <a href="#" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Chats</a>
           <a href="#" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">Multi-Document Chat</a>
           <a href="/pricing" className="text-golden font-medium tracking-wide hover:font-bold hover:underline">Upgrade <Image src={UpgradeImage} alt="upgrade image" className="inline"></Image></a>
