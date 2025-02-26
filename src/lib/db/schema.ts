@@ -1,7 +1,9 @@
 import { integer, pgEnum, pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core'
 
 
-export const userSystemEnum = pgEnum('user_system_enum', ['system', 'user'])
+// export const userSystemEnum = pgEnum('user_system_enum', ['system', 'user'])
+// Update the enum in schema.ts
+export const userSystemEnum = pgEnum('user_system_enum', ['system', 'user', 'assistant']);
 
 
 export const chats = pgTable('chats',
@@ -12,6 +14,8 @@ export const chats = pgTable('chats',
         createdAt: timestamp('created_at').notNull().defaultNow(),
         userId: varchar('user_id', { length: 256 }).notNull(),
         fileKey: text('file_key').notNull(),
+        status: text("status").notNull().default('processing'),
+        role: userSystemEnum('role').notNull().default('user')
     }
 )
 

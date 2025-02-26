@@ -132,80 +132,80 @@
 // export default PDFViewer;
 
 //working with default plugins
-import { Worker, Viewer } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-
-// Import styles
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-
-// Manually set the worker URL
-import { GlobalWorkerOptions } from 'pdfjs-dist';
-
-GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-type Props = { pdfUrl: string };
-
-const PDFViewer = ({ pdfUrl }: Props) => {
-    const defaultLayoutPluginInstance = defaultLayoutPlugin();
-
-    return (
-        <div className="h-full w-full">
-            <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js">
-                <Viewer fileUrl={pdfUrl} plugins={[defaultLayoutPluginInstance]}/>
-            </Worker>
-        </div>
-    );
-};
-
-export default PDFViewer;
-
-
 // import { Worker, Viewer } from '@react-pdf-viewer/core';
-// import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
-// import { zoomPlugin } from '@react-pdf-viewer/zoom';
-// import { scrollModePlugin } from '@react-pdf-viewer/scroll-mode';
+// import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 // // Import styles
 // import '@react-pdf-viewer/core/lib/styles/index.css';
-// import '@react-pdf-viewer/toolbar/lib/styles/index.css';
-// import '@react-pdf-viewer/zoom/lib/styles/index.css';
-// import '@react-pdf-viewer/scroll-mode/lib/styles/index.css';
+// import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
-// // Set PDF worker globally
+// // Manually set the worker URL
 // import { GlobalWorkerOptions } from 'pdfjs-dist';
+
 // GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 // type Props = { pdfUrl: string };
 
 // const PDFViewer = ({ pdfUrl }: Props) => {
-//     // Initialize plugins
-//     const toolbarPluginInstance = toolbarPlugin();
-//     const zoomPluginInstance = zoomPlugin();
-//     const scrollModePluginInstance = scrollModePlugin();
+//     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
 //     return (
-//         <div className="h-full w-full flex flex-col">
-//             {/* Toolbar */}
-//             <div className="p-2 bg-gray-100">
-//                 <toolbarPluginInstance.Toolbar />
-//             </div>
-
-//             {/* PDF Viewer */}
-//             <div className="flex-1 overflow-hidden">
-//                 <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js">
-//                     <Viewer
-//                         fileUrl={pdfUrl}
-//                         plugins={[
-//                             toolbarPluginInstance,
-//                             zoomPluginInstance,
-//                             scrollModePluginInstance,
-//                         ]}
-//                     />
-//                 </Worker>
-//             </div>
+//         <div className="h-full w-full">
+//             <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js">
+//                 <Viewer fileUrl={pdfUrl} plugins={[defaultLayoutPluginInstance]}/>
+//             </Worker>
 //         </div>
 //     );
 // };
 
 // export default PDFViewer;
+
+//working with plugins
+import { Worker, Viewer } from '@react-pdf-viewer/core';
+import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
+import { zoomPlugin } from '@react-pdf-viewer/zoom';
+import { scrollModePlugin } from '@react-pdf-viewer/scroll-mode';
+
+// Import styles
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/toolbar/lib/styles/index.css';
+import '@react-pdf-viewer/zoom/lib/styles/index.css';
+// import '@react-pdf-viewer/scroll-mode/lib/styles/index.css';
+
+// Set PDF worker globally
+import { GlobalWorkerOptions } from 'pdfjs-dist';
+GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+type Props = { pdfUrl: string };
+
+const PDFViewer = ({ pdfUrl }: Props) => {
+    // Initialize plugins
+    const toolbarPluginInstance = toolbarPlugin();
+    const zoomPluginInstance = zoomPlugin();
+    const scrollModePluginInstance = scrollModePlugin();
+
+    return (
+        <div className="h-full w-full flex flex-col">
+            {/* Toolbar */}
+            <div className="p-2 bg-gray-100">
+                <toolbarPluginInstance.Toolbar />
+            </div>
+
+            {/* PDF Viewer */}
+            <div className="flex-1 overflow-hidden">
+                <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js">
+                    <Viewer
+                        fileUrl={pdfUrl}
+                        plugins={[
+                            toolbarPluginInstance,
+                            zoomPluginInstance,
+                            scrollModePluginInstance,
+                        ]}
+                    />
+                </Worker>
+            </div>
+        </div>
+    );
+};
+
+export default PDFViewer;

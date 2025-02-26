@@ -7,6 +7,9 @@ import { getEmbeddings } from './embeddings';
 
 import md5 from 'md5'
 import { convertToAscii } from './utils';
+import { db } from "@/lib/db";
+import { chats } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 
 export const getPineconeClient = () => {
@@ -35,16 +38,18 @@ export async function loadS3IntoPinecone(url: string, fileKey: string) {
     }
 
     const loader = new PDFLoader(file_name);
+    
     const pages = (await loader.load()) as PDFPage[];
-
-
+    // console.log(pages)
     //split and segment in smaller parts
 
     const documents = await Promise.all(pages.map(prepareDocument));
+    // console.log(documents)
 
     //vectorize and embed it  every smalll doc
 
     const vectors = await Promise.all(documents.flat().map(embedDocument))
+    // console.log(vectors)
 
     // upload to pinecone
 
@@ -56,16 +61,85 @@ export async function loadS3IntoPinecone(url: string, fileKey: string) {
 
 
     console.log("inserting vectors into pinecone");
+
     await namespace.upsert(vectors);
 
     return documents[0];
 
 }
 
+
+// export async function loadS3IntoPinecone(url: string, fileKey: string) {
+//     try {
+//       // ... existing processing code ...
+
+//       console.log('downling pdf to file sys')
+
+//       const file_name = await downloadFromS3(url);
+  
+  
+//       if (!file_name) {
+//           throw new Error("COuld not download from s3");
+//       }
+  
+//       const loader = new PDFLoader(file_name);
+//       const pages = (await loader.load()) as PDFPage[];
+  
+  
+//       //split and segment in smaller parts
+  
+//       const documents = await Promise.all(pages.map(prepareDocument));
+  
+//       //vectorize and embed it  every smalll doc
+  
+//       const vectors = await Promise.all(documents.flat().map(embedDocument))
+  
+//       // upload to pinecone
+  
+//       const client = await getPineconeClient();
+//       const pineconeIndex = client.Index('aipdftest');
+  
+//       const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
+  
+//       console.log("inserting vectors into pinecone");
+//       await namespace.upsert(vectors);
+  
+//       // Update chat status after successful Pinecone insertion
+//       await db.update(chats).set({ status: 'complete' }).where(eq(chats.fileKey, fileKey));
+  
+//       return documents[0];
+//     } catch (error) {
+//       await db.update(chats).set({ status: 'failed' }).where(eq(chats.fileKey, fileKey));
+//       throw error;
+//     }
+//   }
+
+
+// lib/pinecone.ts
+// async function embedDocument(doc: Document) {
+//     try {
+//         const embeddings = await getEmbeddings(doc.pageContent);
+//         return {
+//             id: md5(doc.pageContent),
+//             values: embeddings,
+//             metadata: {
+//                 text: doc.metadata.text,
+//                 pageNumber: doc.metadata.pageNumber
+//             }
+//         } as PineconeRecord;
+//     } catch (error) {
+//         console.error("Embedding failed for document:", doc.metadata);
+//         throw error;
+//     }
+// }
+
+//old
 async function embedDocument(doc: Document) {
     try {
         const embeddings = await getEmbeddings(doc.pageContent);
+        // console.log(typeof(doc.pageContent))
         const hash = md5(doc.pageContent);
+        // console.log(hash)
 
         return {
             id: hash,

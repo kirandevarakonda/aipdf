@@ -58,6 +58,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import vector from "../../public/vector.svg";
+import type { ChatStatusResponse } from "../lib/db/index"; 
+
 
 const FileUpload = () => {
     const [uploading, setUploading] = useState(false);
@@ -141,6 +143,28 @@ const FileUpload = () => {
                         },
                     }
                 );
+                // mutate(
+                //   { storeUrl: url, file_key, file_name: file.name },
+                //   {
+                //     onSuccess: ({ chat_id }) => {
+                //       // Poll for processing completion
+                //       const pollStatus = async () => {
+                //         const { data } = await axios.get<ChatStatusResponse>(
+                //           `/api/chat-status?chatId=${chat_id}`
+                //         );
+                        
+                //         if (data.status === 'complete') {
+                //           router.push(`/chat/${chat_id}`);
+                //         } else if (data.status === 'processing') {
+                //           setTimeout(pollStatus, 2000);
+                //         }
+                //       };
+                      
+                //       pollStatus();
+                //     },
+                //     // ... error handling ...
+                //   }
+                // );
 
             } catch (error) {
                 console.error("Error during file upload:", error);
@@ -193,29 +217,7 @@ const FileUpload = () => {
         </div>
       </div>
     </div>
-        // <div className="p-2 bg-white rounded-xl">
-        //     <div
-        //         {...getRootProps({
-        //             className:
-        //                 "border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-20 flex justify-center items-center flex-col",
-        //         })}
-        //     >
-        //         <input {...getInputProps()} />
-        //         {uploading || isPending ? (
-        //             <>
-        //                 <Loader2 className="h-20 w-20 text-blue-500 animate-spin" />
-        //                 <p className="mt-2 text-sm text-slate-400">
-        //                     Spilling Tea to GPT...
-        //                 </p>
-        //             </>
-        //         ) : (
-        //             <>
-        //                 <Inbox className="w-20 h-20 text-blue-500" />
-        //                 <p className="mt-2 text-sm text-slate-400">Drop PDF Here</p>
-        //             </>
-        //         )}
-        //     </div>
-        // </div>
+
     );
 };
 

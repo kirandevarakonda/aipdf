@@ -507,96 +507,473 @@
 
 // export default ChatComponent;
 
+//old
+// "use client";
+// import React, { useEffect, useRef } from "react";
+// import { useQuery } from "@tanstack/react-query";
+// import axios from "axios";
+// import { Input } from "./ui/input";
+// import { useChat } from "ai/react";
+// import { Button } from "./ui/button";
+// import { Send, MessagesSquare } from "lucide-react";
+// import MessageList from "./MessageList";
+// import { Message } from "ai";
+
+// type Props = { chatId: number };
+
+// const ChatComponent = ({ chatId }: Props) => {
+//   // Fetch existing messages when component mounts
+//   const { data, isLoading } = useQuery({
+//     queryKey: ["chat", chatId],
+//     queryFn: async () => {
+//       const response = await axios.post<Message[]>("/api/get-messages", {
+//         chatId,
+//       });
+//       return response.data;
+//     },
+//   });
+
+//   const { input, handleInputChange, handleSubmit, setInput, messages } = useChat({
+//     api: "/api/chat",
+//     body: {
+//       chatId,
+//     },
+//     initialMessages: data || [],
+//   });
+
+//   // Automatically send "Summarize the PDF" if no messages exist
+//   useEffect(() => {
+//     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+//     const autoSummarize = async () => {
+//       if (messages.length === 0 && !isLoading) {
+//         await sleep(2000); // 2-second delay
+//         setInput("Summarize the PDF");
+//         handleSubmit();
+//       }
+//     };
+
+//     autoSummarize();
+//   }, [messages.length, setInput, handleSubmit, isLoading]);
+
+//   // Reference for auto-scrolling to the last message
+//   const lastMessageRef = useRef<HTMLDivElement | null>(null);
+
+//   useEffect(() => {
+//     if (lastMessageRef.current) {
+//       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+//     }
+//   }, [messages]);
+
+//   return (
+//     <div className="w-full h-full max-h-screen flex flex-col">
+//       {/* Header */}
+//       <div className="flex items-center justify-between p-4 bg-white shadow-md sticky top-0">
+//         <div className="flex items-center space-x-2">
+//           <MessagesSquare className="text-primary" />
+//           <h3 className="text-lg font-medium">Start Chatting</h3>
+//         </div>
+//       </div>
+
+//       {/* Message list */}
+//       <div className="flex-1 overflow-y-auto p-4 custom-scrollbar" id="message-container">
+//         <MessageList messages={messages} isLoading={isLoading} />
+//         <div ref={lastMessageRef} />
+//       </div>
+
+//       {/* Input section */}
+//       <div className="p-4 bg-white shadow-sm sticky bottom-0">
+//         <form onSubmit={handleSubmit} className="flex w-full items-center space-x-2">
+//           <Input
+//             value={input}
+//             onChange={handleInputChange}
+//             placeholder="Ask any question..."
+//             className="flex-1 bg-gray-100 focus:ring-0 focus:outline-none"
+//           />
+//           <Button type="submit" size="icon" className="bg-[#844af9]">
+//             <Send className="h-4 w-4 text-white" />
+//           </Button>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ChatComponent;
 
 "use client";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Input } from "./ui/input";
 import { useChat } from "ai/react";
 import { Button } from "./ui/button";
-import { Send, MessagesSquare } from "lucide-react";
+import { Send, MessagesSquare, Mic, AlertCircle, ArrowDownCircle } from "lucide-react";
 import MessageList from "./MessageList";
 import { Message } from "ai";
+import { Skeleton } from "./ui/skeleton";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "./ui/tooltip";
 
 type Props = { chatId: number };
 
 const ChatComponent = ({ chatId }: Props) => {
-  // Fetch existing messages when component mounts
-  const { data, isLoading } = useQuery({
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [autoScroll, setAutoScroll] = useState(true);
+
+  const { data, isLoading: isMessagesLoading } = useQuery({
     queryKey: ["chat", chatId],
     queryFn: async () => {
-      const response = await axios.post<Message[]>("/api/get-messages", {
-        chatId,
-      });
-      return response.data;
-    },
-  });
-
-  const { input, handleInputChange, handleSubmit, setInput, messages } = useChat({
-    api: "/api/chat",
-    body: {
-      chatId,
-    },
-    initialMessages: data || [],
-  });
-
-  // Automatically send "Summarize the PDF" if no messages exist
-  useEffect(() => {
-    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-    const autoSummarize = async () => {
-      if (messages.length === 0 && !isLoading) {
-        await sleep(2000); // 2-second delay
-        setInput("Summarize the PDF");
-        handleSubmit();
+      try {
+        const response = await axios.post<Message[]>("/api/get-messages", { chatId });
+        return response.data.sort(
+          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
+      } catch (error) {
+        console.error("Failed to load messages:", error);
+        return [];
       }
-    };
+    }
+  });
 
-    autoSummarize();
-  }, [messages.length, setInput, handleSubmit, isLoading]);
+  const { 
+    messages, 
+    input, 
+    handleInputChange, 
+    handleSubmit, 
+    isLoading: isResponding,
+    setMessages,
+    error
+  } = useChat({
+    api: "/api/chat",
+    body: { chatId },
+    onFinish: () => refetch(),
+    onError: (error) => {
+      console.error("Chat error:", error);
+    },
+    onResponse: async (response) => {
+      const assistantMessageId = response.headers.get('X-Assistant-Message-Id');
+      if (!assistantMessageId) return;
 
-  // Reference for auto-scrolling to the last message
-  const lastMessageRef = useRef<HTMLDivElement | null>(null);
+      setMessages(prev => [...prev, {
+        id: assistantMessageId,
+        content: "▌",
+        role: "assistant",
+        createdAt: new Date()
+      }]);
+
+      const reader = response.body?.getReader();
+      if (!reader) return;
+
+      const decoder = new TextDecoder();
+      let done = false;
+      let fullContent = "";
+
+      try {
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          if (value) {
+            const chunkValue = decoder.decode(value);
+            fullContent += chunkValue;
+
+            setMessages(prev => prev.map(msg => 
+              msg.id === assistantMessageId 
+                ? { ...msg, content: fullContent + "▌" } 
+                : msg
+            ));
+          }
+        }
+      } catch (error) {
+        console.error('Stream reading error:', error);
+      } finally {
+        reader.releaseLock();
+      }
+
+      setMessages(prev => prev.map(msg => 
+        msg.id === assistantMessageId 
+          ? { ...msg, content: fullContent } 
+          : msg
+      ));
+    }
+  });
 
   useEffect(() => {
-    if (lastMessageRef.current) {
-      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    if (data) setMessages(data);
+  }, [data]);
+
+  // Scroll handling
+  const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
+    messagesEndRef.current?.scrollIntoView({ behavior });
+    setAutoScroll(true);
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    const atBottom = scrollHeight - scrollTop === clientHeight;
+    setAutoScroll(atBottom);
+    setIsScrolled(!atBottom);
+  };
+
+  // Auto-scroll when new messages arrive
+  useEffect(() => {
+    if (autoScroll) {
+      scrollToBottom("auto");
     }
   }, [messages]);
 
   return (
-    <div className="w-full h-full max-h-screen flex flex-col">
+    <div className="w-full h-full flex flex-col bg-gradient-to-br from-purple-50 to-blue-50">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-white shadow-md sticky top-0">
-        <div className="flex items-center space-x-2">
-          <MessagesSquare className="text-primary" />
-          <h3 className="text-lg font-medium">Start Chatting</h3>
+      <header className="flex items-center justify-between p-4 bg-white border-b shadow-sm">
+        <div className="flex items-center space-x-3">
+          <MessagesSquare className="h-6 w-6 text-purple-600" />
+          <div>
+            <h1 className="text-lg font-semibold text-gray-900">PDF Assistant</h1>
+            <p className="text-sm text-gray-500">Ask questions about your document</p>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Message list */}
-      <div className="flex-1 overflow-y-auto p-4 custom-scrollbar" id="message-container">
-        <MessageList messages={messages} isLoading={isLoading} />
-        <div ref={lastMessageRef} />
-      </div>
+      {/* Messages Area */}
+      <main 
+        ref={scrollContainerRef}
+        className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth"
+        onScroll={handleScroll}
+      >
+        {isMessagesLoading ? (
+          <div className="max-w-3xl mx-auto space-y-8">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="space-y-2">
+                <Skeleton className="h-4 w-[200px]" />
+                <Skeleton className="h-4 w-[300px]" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <>
+            <MessageList messages={messages} isLoading={isResponding} />
+            <div ref={messagesEndRef} />
+          </>
+        )}
+        
+        {isScrolled && (
+          <button
+            onClick={() => scrollToBottom()}
+            className="fixed bottom-20 right-6 p-2 bg-white border border-gray-200 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
+          >
+            <ArrowDownCircle className="h-6 w-6 text-purple-600" />
+          </button>
+        )}
+      </main>
 
-      {/* Input section */}
-      <div className="p-4 bg-white shadow-sm sticky bottom-0">
-        <form onSubmit={handleSubmit} className="flex w-full items-center space-x-2">
-          <Input
-            value={input}
-            onChange={handleInputChange}
-            placeholder="Ask any question..."
-            className="flex-1 bg-gray-100 focus:ring-0 focus:outline-none"
-          />
-          <Button type="submit" size="icon" className="bg-[#844af9]">
-            <Send className="h-4 w-4 text-white" />
-          </Button>
+      {/* Input Area */}
+      <footer className="sticky bottom-0 bg-white border-t shadow-lg">
+        <form 
+          onSubmit={(e) => {
+            handleSubmit(e);
+            setTimeout(() => scrollToBottom(), 100);
+          }}
+          className="p-4 pt-3 max-w-5xl mx-auto"
+        >
+          {error && (
+            <div className="mb-3 p-2 bg-red-50 border border-red-200 rounded-lg flex items-center text-red-600">
+              <AlertCircle className="h-4 w-4 mr-2" />
+              <span className="text-sm">Error: {error.message}</span>
+            </div>
+          )}
+
+          <div className="relative flex items-center gap-2">
+            <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  type="button"
+                  className="text-gray-500 hover:bg-gray-50"
+                >
+                  <Mic className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Voice input (coming soon)</TooltipContent>
+            </Tooltip>
+            </TooltipProvider>
+            <Input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="Ask a question about the PDF..."
+              className="flex-1 pr-12 border-2 border-gray-200 focus:border-purple-500 focus-visible:ring-0"
+              disabled={isResponding}
+            />
+
+            <Button 
+              type="submit" 
+              size="sm"
+              className="absolute right-2 bg-purple-600 hover:bg-purple-700 text-white"
+              disabled={isResponding}
+            >
+              {isResponding ? (
+                <div className="flex items-center">
+                  <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2" />
+                  Processing...
+                </div>
+              ) : (
+                <>
+                  <Send className="h-4 w-4 mr-2" />
+                  Send
+                </>
+              )}
+            </Button>
+          </div>
+
+          <p className="mt-2 text-center text-sm text-gray-500">
+            AI-powered responses. May occasionally generate incorrect information.
+          </p>
         </form>
-      </div>
+      </footer>
     </div>
   );
 };
 
 export default ChatComponent;
+
+
+//new deepseek
+// "use client";
+// import React, { useEffect, useRef, useState } from "react";
+// import { useQuery } from "@tanstack/react-query";
+// import axios from "axios";
+// import { Input } from "./ui/input";
+// import { useChat } from "ai/react";
+// import { Button } from "./ui/button";
+// import { Send, MessagesSquare } from "lucide-react";
+// import MessageList from "./MessageList";
+// import { Message } from "ai";
+
+// type Props = { chatId: number };
+
+// interface ChatStatusResponse {
+//   status: 'processing' | 'complete' | 'failed';
+// }
+
+// const ChatComponent = ({ chatId }: Props) => {
+//   const [isProcessing, setIsProcessing] = useState(true);
+//   const lastMessageRef = useRef<HTMLDivElement>(null);
+
+//   // Status query with proper typing
+//   const { data: statusData, refetch: refetchStatus } = useQuery<ChatStatusResponse>({
+//     queryKey: ["chatStatus", chatId],
+//     queryFn: async () => {
+//       const response = await axios.get<ChatStatusResponse>(
+//         `/api/chat-status?chatId=${chatId}`
+//       );
+//       return response.data;
+//     },
+//     refetchInterval: 1000,
+//     onSuccess: (data) => {
+//       setIsProcessing(data.status !== 'complete');
+//     }
+//   });
+
+//   // Force immediate status updates
+//   useEffect(() => {
+//     const interval = setInterval(refetchStatus, 500);
+//     return () => clearInterval(interval);
+//   }, [refetchStatus]);
+
+//   // Rest of the component
+//   const { data, isLoading } = useQuery({
+//     queryKey: ["chatMessages", chatId],
+//     queryFn: async () => {
+//       const response = await axios.post<Message[]>("/api/get-messages", { chatId });
+//       return response.data;
+//     }
+//   });
+
+//   const { 
+//     input, 
+//     handleInputChange, 
+//     handleSubmit, 
+//     setInput, 
+//     messages, 
+//     append 
+//   } = useChat({
+//     api: "/api/chat",
+//     body: { chatId },
+//     initialMessages: data || [],
+//   });
+
+//   // Auto-summarize when processing completes
+//   useEffect(() => {
+//     const autoSummarize = async () => {
+//       if (statusData?.status === 'complete' && messages.length === 0 && !isLoading) {
+//         await new Promise(resolve => setTimeout(resolve, 500));
+//         append({
+//           content: "Summarize the key points from the PDF",
+//           role: "user"
+//         });
+//       }
+//     };
+//     autoSummarize();
+//   }, [statusData, messages.length, append, isLoading]);
+
+//   useEffect(() => {
+//     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+//   }, [messages]);
+
+//   return (
+//     <div className="w-full h-full max-h-screen flex flex-col">
+//       {/* Status indicator header */}
+//       <div className="flex items-center justify-between p-4 bg-white shadow-md sticky top-0">
+//         <div className="flex items-center space-x-2">
+//           <MessagesSquare className="text-primary" />
+//           <h3 className="text-lg font-medium">
+//             {statusData?.status === 'complete' ? "Start Chatting" : 
+//              `Processing PDF... (${statusData?.status})`}
+//           </h3>
+//         </div>
+//       </div>
+
+//       {/* Message list */}
+//       <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
+//         <MessageList 
+//           messages={messages} 
+//           isLoading={isLoading}
+//           processing={statusData?.status !== 'complete'}
+//         />
+//         <div ref={lastMessageRef} />
+//       </div>
+
+//       {/* Input form */}
+//       <div className="p-4 bg-white shadow-sm sticky bottom-0">
+//         <form 
+//           onSubmit={handleSubmit} 
+//           className="flex w-full items-center space-x-2"
+//         >
+//           <Input
+//             value={input}
+//             onChange={handleInputChange}
+//             placeholder={statusData?.status === 'complete' 
+//               ? "Ask any question..." 
+//               : `PDF ${statusData?.status}...`}
+//             className="flex-1 bg-gray-100 focus:ring-0 focus:outline-none"
+//             disabled={statusData?.status !== 'complete'}
+//           />
+//           <Button 
+//             type="submit" 
+//             size="icon" 
+//             className="bg-[#844af9]"
+//             disabled={statusData?.status !== 'complete'}
+//           >
+//             <Send className="h-4 w-4 text-white" />
+//           </Button>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ChatComponent;
+

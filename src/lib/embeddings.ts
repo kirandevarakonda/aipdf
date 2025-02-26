@@ -12,15 +12,17 @@ const genAI = new GoogleGenerativeAI(config.apiKey!);
 export async function getEmbeddings(text: string): Promise<number[]> {
     try {
         // Basic input validation
-        if (!text || typeof text !== 'string') {
-            throw new Error('Invalid input text');
-        }
+        // if (!text || typeof text !== 'string') {
+        //     throw new Error('Invalid input text');
+        // }
 
         const cleanedText = text.replace(/\n/g, ' ');
+        console.log(cleanedText)
         const model = genAI.getGenerativeModel({ model: 'embedding-001' });
 
         const result = await model.embedContent(cleanedText);
         const embedding = result.embedding;
+        // console.log(embedding);
 
         if (embedding) {
             return embedding.values;

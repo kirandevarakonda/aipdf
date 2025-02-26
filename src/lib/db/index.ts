@@ -10,3 +10,7 @@ if (!process.env.DATABASE_URL_NEON) {
 const sql = neon(process.env.DATABASE_URL_NEON!)
 
 export const db = drizzle(sql);
+
+export type ChatStatusResponse = {
+    status: 'processing' | 'complete' | 'failed';
+  };
