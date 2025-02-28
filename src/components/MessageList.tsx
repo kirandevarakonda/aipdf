@@ -127,23 +127,95 @@
 
 // export default MessageList;
 
+//working
+// "use client";
+// import { Message } from "ai";
+// import { cn } from "@/lib/utils";
+// import ReactMarkdown from 'react-markdown';
+// import remarkGfm from 'remark-gfm';
+// import { format } from 'date-fns';
+
+// export default function MessageList({
+//   messages,
+//   isLoading
+// }: {
+//   messages: Message[];
+//   isLoading: boolean;
+// }) {
+//   return (
+//     <div className="space-y-4 max-w-3xl mx-auto">
+//       {messages.map((message) => (
+//         <div
+//           key={message.id}
+//           className={cn(
+//             "group relative transition-all duration-200 ease-out",
+//             message.role === "user" ? "ml-auto" : "mr-auto"
+//           )}
+//         >
+//           <div className={cn(
+//             "p-3 rounded-2xl text-sm shadow-sm",
+//             message.role === "user" 
+//               ? "bg-blue-600 text-white ml-6" 
+//               : "bg-white text-gray-900 border border-gray-200 mr-6"
+//           )}>
+//             <ReactMarkdown
+//               remarkPlugins={[remarkGfm]}
+//               components={{
+//                 strong: ({ node, ...props }) => (
+//                   <strong className="font-semibold" {...props} />
+//                 ),
+//                 ul: ({ node, ...props }) => (
+//                   <ul className="list-disc pl-5 space-y-1 my-1" {...props} />
+//                 ),
+//                 li: ({ node, ...props }) => (
+//                   <li className="pl-1" {...props} />
+//                 ),
+//                 p: ({ node, ...props }) => (
+//                   <p className="mb-1.5 last:mb-0" {...props} />
+//                 ),
+//               }}
+//               className="prose-sm prose-blue"
+//             >
+//               {message.content}
+//             </ReactMarkdown>
+//             <div className={cn(
+//               "mt-1.5 text-xs",
+//               message.role === "user" ? "text-blue-100" : "text-gray-500"
+//             )}>
+//               {format(new Date(message.createdAt), 'hh:mm a')}
+//             </div>
+//           </div>
+//         </div>
+//       ))}
+
+//       {isLoading && (
+//         <div className="mr-auto max-w-[85%]">
+//           <div className="bg-white border border-gray-200 rounded-2xl p-3 text-sm animate-pulse">
+//             <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+//             <div className="h-4 bg-gray-200 rounded w-1/2" />
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
 "use client";
 import { Message } from "ai";
 import { cn } from "@/lib/utils";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { format } from 'date-fns';
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { format } from "date-fns";
 
 export default function MessageList({
   messages,
-  isLoading
+  isLoading,
 }: {
   messages: Message[];
   isLoading: boolean;
 }) {
   return (
-    <div className="space-y-4 max-w-3xl mx-auto">
+    <div className="space-y-4 max-w-3xl mx-auto p-4 bg-gray-50 rounded-lg shadow-md">
       {messages.map((message) => (
         <div
           key={message.id}
@@ -152,12 +224,14 @@ export default function MessageList({
             message.role === "user" ? "ml-auto" : "mr-auto"
           )}
         >
-          <div className={cn(
-            "p-3 rounded-2xl text-sm shadow-sm",
-            message.role === "user" 
-              ? "bg-blue-600 text-white ml-6" 
-              : "bg-white text-gray-900 border border-gray-200 mr-6"
-          )}>
+          <div
+            className={cn(
+              "p-4 rounded-lg text-sm shadow-md",
+              message.role === "user"
+                ? "bg-gray-800 text-white ml-6"
+                : "bg-gray-100 text-gray-900 border border-gray-300 mr-6"
+            )}
+          >
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
@@ -174,15 +248,19 @@ export default function MessageList({
                   <p className="mb-1.5 last:mb-0" {...props} />
                 ),
               }}
-              className="prose-sm prose-blue"
+              className="prose-sm prose-gray"
             >
               {message.content}
             </ReactMarkdown>
-            <div className={cn(
-              "mt-1.5 text-xs",
-              message.role === "user" ? "text-blue-100" : "text-gray-500"
-            )}>
-              {format(new Date(message.createdAt), 'hh:mm a')}
+            <div
+              className={cn(
+                "mt-2 text-xs",
+                message.role === "user" ? "text-gray-400" : "text-gray-600"
+              )}
+            >
+              {message.createdAt
+                ? format(new Date(message.createdAt), "hh:mm a")
+                : "Just now"}
             </div>
           </div>
         </div>
@@ -190,15 +268,16 @@ export default function MessageList({
 
       {isLoading && (
         <div className="mr-auto max-w-[85%]">
-          <div className="bg-white border border-gray-200 rounded-2xl p-3 text-sm animate-pulse">
-            <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
-            <div className="h-4 bg-gray-200 rounded w-1/2" />
+          <div className="bg-gray-100 border border-gray-300 rounded-lg p-4 text-sm animate-pulse">
+            <div className="h-4 bg-gray-300 rounded w-3/4 mb-2" />
+            <div className="h-4 bg-gray-300 rounded w-1/2" />
           </div>
         </div>
       )}
     </div>
   );
 }
+
 
 //formatted response
 // import React from "react";

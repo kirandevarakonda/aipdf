@@ -669,7 +669,7 @@ export const runtime = "edge";
 const DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions";
 
 async function createDeepseekStream(userQuestion: string, chatId: number, context: string) {
-  let assistantMessageId: number;
+  let assistantMessageId: number= -1;;
   
   try {
     // Store user message
@@ -775,7 +775,7 @@ async function createDeepseekStream(userQuestion: string, chatId: number, contex
 
   } catch (error) {
     console.error("Stream error:", error);
-    if (assistantMessageId) {
+    if (assistantMessageId!== -1) {
       await db.update(_messages)
         .set({ content: "Error generating response" })
         .where(eq(_messages.id, assistantMessageId));
