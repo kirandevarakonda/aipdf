@@ -799,6 +799,7 @@ export async function POST(req: Request) {
 
     const { stream, messageId } = await createDeepseekStream(lastMessage.content, chatId, context);
     const response = new StreamingTextResponse(stream);
+
     response.headers.set('X-Assistant-Message-Id', messageId.toString());
     
     return response;
