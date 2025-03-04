@@ -226,15 +226,15 @@ export default async function Dashboard() {
     <div>
       <HeaderAuth />
       <div className="max-w-4xl mx-auto pt-20">
-        {/* <div className="flex items-center justify-center mb-8">
+        <div className="flex items-center justify-center mb-8">
           <FileUpload />
-        </div> */}
+        </div>
 
         <div className="rounded-md border">
           <Table>
             <TableHeader className="bg-gray-50">
               <TableRow>
-                <TableHead className="w-[60%]">Chats</TableHead>
+                <TableHead className="w-[60%]">Document</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="text-right">Date</TableHead>
               </TableRow>

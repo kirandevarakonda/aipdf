@@ -3,12 +3,17 @@ import MainIntro5 from "../../components/MainIntro5";
 import MainIntro10 from "../../components/MainIntro10";
 import MainIntro9 from "../../components/MainIntro9";
 import Header from "../../components/Header";
+import HeaderAuth from "@/components/Headerauth";
+import { auth } from "@clerk/nextjs/server";
 
 
 export default function Pricing() {
+    const { userId } = auth();
+    console.log(userId);
+    const isAuth = !!userId;
     return (
         <div className="pricing">
-        <Header />
+        {isAuth ? <HeaderAuth /> : <Header />}
         {/* <MainIntro4/> */}
         <div className="pt-14">
         <div className="mt-2 p-1">

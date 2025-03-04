@@ -281,7 +281,7 @@ export default function MessageList({
               "p-5 rounded-lg text-sm shadow-md relative",
               message.role === "user"
                 ? "bg-gray-900 text-white ml-6"
-                : "bg-white text-gray-800 border mr-6"
+                : "bg-white text-gray-800 border border-gray-200 mr-6"
             )}
           >
             <ReactMarkdown
