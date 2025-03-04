@@ -225,7 +225,7 @@ export default async function Dashboard() {
   return (
     <div>
       <HeaderAuth />
-      <div className="max-w-4xl mx-auto pt-20">
+      <div className="max-w-4xl mx-auto pt-20 p-8">
         {/* <div className="flex items-center justify-center mb-8">
           <FileUpload />
         </div> */}

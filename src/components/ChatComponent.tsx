@@ -1395,16 +1395,6 @@ const ChatComponent = ({ chatId }: Props) => {
 
   return (
     <div className="w-full h-full flex flex-col bg-gradient-to-br from-purple-50 to-blue-50">
-      <header className="flex items-center justify-between p-4 bg-white border-b shadow-sm">
-        <div className="flex items-center space-x-3">
-          <MessagesSquare className="h-6 w-6 text-gray-800" />
-          <div>
-            <h1 className="text-lg font-semibold text-gray-900">PDF Assistant</h1>
-            <p className="text-sm text-gray-500">Ask questions about your document</p>
-          </div>
-        </div>
-      </header>
-      
       <main 
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto p-4 scroll-smooth"

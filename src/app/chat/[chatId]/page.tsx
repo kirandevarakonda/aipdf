@@ -41,6 +41,7 @@ import ChatPageContent from './ChatPageContent';
 import { getChatsData } from './chatUtils';
 import { Slab } from 'react-loading-indicators';
 import HeaderAuth from '@/components/Headerauth';
+import HeaderAuthChat from '@/components/headerauthchat';
 
 type Props = {
     params: {
@@ -57,7 +58,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
         <div>
             {/* HeaderAuth will be hidden on mobile and shown in sidebar */}
             <div className="lg:block hidden">
-                <HeaderAuth />
+                <HeaderAuthChat />
             </div>
             <div className="h-screen overflow-hidden">
                 <Suspense

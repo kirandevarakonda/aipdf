@@ -1,4 +1,4 @@
-// // "use client";
+"use client";
 // // import Link from "next/link";
 // // import { CircleUser, FileText, Home, LineChart, Menu, MessageCircle, Package, Package2, ShoppingCart, Squirrel, Users } from "lucide-react";
 // // import { Badge } from "@/components/ui/badge";
@@ -383,6 +383,10 @@ import {
 import PDFViewer from "@/components/PDFViewer";
 import ChatComponent from "@/components/ChatComponent";
 import HeaderAuth from "@/components/Headerauth";
+import HeaderAuthChat from "@/components/headerauthchat";
+import { AcmeLogo } from "../../../../public/logo";
+import Image from "next/image";
+import aipdfchat from "../../../../public/aipdfchat.svg";
 
 type Chat = {
     id: number;
@@ -436,10 +440,10 @@ export default function ChatPageContent({ chatId, initialChatsData }: ChatPageCo
                     >
                         <Menu className="h-5 w-5 text-gray-600" />
                     </Button>
-                    <Link href="/" className="flex items-center gap-2 text-primary">
-                        <Home className="h-5 w-5" />
-                        <span className="font-semibold">PDF Assistant</span>
-                    </Link>
+                    <Link href="/" className="flex items-center gap-5 pl-16">
+                    <AcmeLogo />
+                    <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer" />
+                </Link>
                 </div>
                 
                 {isMobile && (
@@ -512,7 +516,7 @@ export default function ChatPageContent({ chatId, initialChatsData }: ChatPageCo
                         </div>
                         {/* Mobile only: Show HeaderAuth in sidebar */}
                         <div className="md:hidden border-t p-4">
-                            <HeaderAuth isSidebar={true} />
+                            <HeaderAuthChat isSidebar={true} />
                         </div>
                     </div>
                 )}
@@ -533,13 +537,13 @@ export default function ChatPageContent({ chatId, initialChatsData }: ChatPageCo
                     </div>
                 ) : (
                     <ResizablePanelGroup direction="horizontal" className="flex-1">
-                        <ResizablePanel defaultSize={60} minSize={40}>
+                        <ResizablePanel defaultSize={50} minSize={40}>
                             <div className="h-full bg-white shadow-sm">
                                 <PDFViewer pdfUrl={currentChat?.pdfUrl || ''} />
                             </div>
                         </ResizablePanel>
                         <ResizableHandle withHandle className="bg-gray-100 hover:bg-gray-200" />
-                        <ResizablePanel defaultSize={40} minSize={30}>
+                        <ResizablePanel defaultSize={50} minSize={40}>
                             <div className="h-full bg-white border-l shadow-sm">
                                 <ChatComponent chatId={parseInt(chatId)} />
                             </div>

@@ -59,6 +59,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import vector from "../../public/vector.svg";
 import type { ChatStatusResponse } from "../lib/db/index"; 
+import { Button } from "./ui/button";
 
 
 const FileUpload = () => {
@@ -143,29 +144,6 @@ const FileUpload = () => {
                         },
                     }
                 );
-                // mutate(
-                //   { storeUrl: url, file_key, file_name: file.name },
-                //   {
-                //     onSuccess: ({ chat_id }) => {
-                //       // Poll for processing completion
-                //       const pollStatus = async () => {
-                //         const { data } = await axios.get<ChatStatusResponse>(
-                //           `/api/chat-status?chatId=${chat_id}`
-                //         );
-                        
-                //         if (data.status === 'complete') {
-                //           router.push(`/chat/${chat_id}`);
-                //         } else if (data.status === 'processing') {
-                //           setTimeout(pollStatus, 2000);
-                //         }
-                //       };
-                      
-                //       pollStatus();
-                //     },
-                //     // ... error handling ...
-                //   }
-                // );
-
             } catch (error) {
                 console.error("Error during file upload:", error);
                 toast.error("An error occurred. Please try again.");
@@ -176,14 +154,12 @@ const FileUpload = () => {
     });
 
     return (
-        <div
-      className="transition-all duration-700 ease-in-out transform "
-    >
-      <div className="h-[366px] w-[520px] border-4 border-inherit rounded-2xl bg-white bg-opacity-50 bg-inherit hover:border-customPurple hover:border-opacity-20 transition-transform transform hover:scale-105">
+      <div className="transition-all duration-700 ease-in-out transform w-full">
+      <div className="h-auto md:h-[366px] w-full max-w-[520px] border-4 border-inherit rounded-2xl bg-white bg-opacity-50 bg-inherit hover:border-customPurple hover:border-opacity-20 transition-transform transform hover:scale-105">
         <div
           {...getRootProps({
             className:
-              "flex items-center bg-white w-[480px] h-[200px] justify-center gap-4 border-2 border-dashed rounded-2xl mt-4 mx-4 hover:bg-gray-100 transition cursor-pointer",
+              "flex items-center bg-white w-full md:w-[480px] h-[200px] justify-center gap-4 border-2 border-dashed rounded-2xl mt-4 mx-auto hover:bg-gray-100 transition cursor-pointer",
           })}
         >
           <input {...getInputProps()} />
@@ -200,25 +176,28 @@ const FileUpload = () => {
           )}
         </div>
 
-        <div className="flex items-center">
-          <hr className="border-t-1 border-gray-300 w-[28%] my-8 mx-6" />
-          <span className="font-medium text-gray-500">Or Paste an URL</span>
-          <hr className="border-t-1 border-gray-300 w-[28%] my-8 mx-6" />
-        </div>
-        <div className="flex items-center">
-          <input
-            type="text"
-            placeholder="https://youtu.be/abc?si=pqr"
-            className="border-2 border-solid border-gray-400 rounded-md mx-6 w-[75%] py-2 px-2 transition-transform transform focus:scale-105 focus:outline-none"
-          />
-          <button className="px-4 py-2 bg-customPurple text-white rounded-lg shadow-md hover:bg-blue-500 transition-transform transform hover:scale-105">
-            Go
-          </button>
+        <div className="flex flex-col items-center p-4">
+        <div className="flex items-center w-full">
+        <hr className="border-t-1 border-gray-300 flex-1" />
+        <span className="font-medium text-gray-500 px-2 text-sm md:text-base whitespace-nowrap">
+          Or Paste an URL
+        </span>
+        <hr className="border-t-1 border-gray-300 flex-1" />
+      </div>
+          <div className="flex items-center w-full gap-2 pt-6">
+            <input
+              type="text"
+              placeholder="https://youtu.be/abc?si=pqr"
+              className="border-2 border-solid border-gray-400 rounded-md w-full py-2 px-2 text-sm md:text-base"
+            />
+            <Button className="px-4 py-2 text-white rounded-lg shadow-md hover:bg-violet-700">
+              Go
+            </Button>
+          </div>
         </div>
       </div>
     </div>
-
-    );
+  );
 };
 
 export default FileUpload;
