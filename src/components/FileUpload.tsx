@@ -164,7 +164,7 @@ const FileUpload = () => {
         >
           <input {...getInputProps()} />
           {uploading || isPending ? (
-            <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
+            <Loader2 className="h-10 w-10 p-10 text-blue-500 animate-spin" />
           ) : (
             <>
               <Image src={vector} alt="pdf's image" className="" />

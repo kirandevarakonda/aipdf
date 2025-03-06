@@ -232,7 +232,7 @@ export default function HeaderAuth() {
       <div className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300`}>
         <div className="p-5 flex flex-col gap-6">
           {/* Sidebar Header */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center ">
             <div className="flex items-center gap-3">
               <AcmeLogo />
               <Image src={aipdfchat} alt="logo" width={120} height={40} />
@@ -269,7 +269,7 @@ export default function HeaderAuth() {
           </button>
 
           {/* Logo (Always Visible) */}
-          <Link href="/" className="flex items-center gap-5 ">
+          <Link href="/" className="flex items-center gap-5 pl-8">
             <AcmeLogo />
             <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer" />
           </Link>

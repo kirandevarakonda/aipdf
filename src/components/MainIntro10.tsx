@@ -180,6 +180,69 @@
 
 // export default MainIntro10;
 
+// import Image from "next/image";
+// import logo from "../../public/group-551.svg";
+// import icon1 from "../../public/frame4.svg";
+// import icon2 from "../../public/frame5.svg";
+// import icon3 from "../../public/frame6.svg";
+// import icon4 from "../../public/frame7.svg";
+
+// const MainIntro10 = () => {
+//   return (
+//     <div id="affiliates" className="mt-20 w-full relative">
+//       {/* Gradient Section */}
+//       <div className="flex justify-center items-center relative z-10">
+//         <div className="bg-[linear-gradient(291.39deg,#0379FF_22.79%,#B74BDD_50%,#FF805F_77.21%)] 
+//           w-[85%] rounded-3xl text-center p-10 shadow-lg">
+//           <span className="text-white text-lg font-normal">✨ GET STARTED</span>
+//           <h2 className="text-white text-3xl font-bold mt-2">Ready to try our AI PDF Chat?</h2>
+//           <p className="text-white text-medium font-normal max-w-lg mx-auto mt-3">
+//             No time to read 50-page PDFs? Let our AI do it for you. Our smart AI reads the details
+//             so you don&apos;t have to. Summarize any PDF in seconds and get the key points fast.
+//           </p>
+//           <div className="mt-5 space-x-4">
+//             <button className="text-white bg-black rounded-xl px-6 py-2 font-medium text-lg hover:border-2 hover:border-black transition-all duration-300 ease-in-out transform hover:scale-105 justify-center">
+//               View pricing
+//             </button>
+//             <button className="text-white bg-gray-200 bg-opacity-15 px-6 py-2 text-lg border-2 rounded-xl hover:bg-opacity-20 transition-all duration-300 ease-in-out transform hover:scale-105">
+//               Get started
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Footer Section */}
+//       <div className="bg-black text-white text-center pt-28 pb-10 mt-[-10%] relative z-0">
+//         <div className="flex justify-center items-center pt-16 animate-fade-in-up">
+//           <Image src={logo} alt="logo" width={50} height={50} className="transition-all duration-300 transform hover:scale-110" />
+//           <span className="text-2xl font-semibold pl-2">aipdf.chat</span>
+//         </div>
+//         <div className="mt-6 space-x-8">
+//           <a href="#" className="font-semibold tracking-wide hover:underline transition-all duration-300 ease-in-out transform hover:scale-105">Features</a>
+//           <a href="#" className="font-semibold tracking-wide hover:underline transition-all duration-300 ease-in-out transform hover:scale-105">Use Case</a>
+//           <a href="#" className="font-semibold tracking-wide hover:underline transition-all duration-300 ease-in-out transform hover:scale-105">Pricing</a>
+//           <a href="#" className="font-semibold tracking-wide hover:underline transition-all duration-300 ease-in-out transform hover:scale-105">Affiliates</a>
+//         </div>
+//         <div className="flex justify-center items-center mt-6 space-x-4 animate-fade-in-up">
+//           <Image src={icon1} alt="icon" className="hover:opacity-90 hover:cursor-pointer transition-all duration-300 transform hover:scale-110" width={30} height={30} />
+//           <Image src={icon2} alt="icon" className="hover:opacity-90 hover:cursor-pointer transition-all duration-300 transform hover:scale-110" width={30} height={30} />
+//           <Image src={icon3} alt="icon" className="hover:opacity-90 hover:cursor-pointer transition-all duration-300 transform hover:scale-110" width={30} height={30} />
+//           <Image src={icon4} alt="icon" className="hover:opacity-90 hover:cursor-pointer transition-all duration-300 transform hover:scale-110" width={30} height={30} />
+//         </div>
+//         <div className="mt-10 opacity-35">
+//           <hr className="border-white w-4/5 mx-auto transition-all duration-300 ease-in-out transform hover:scale-105" />
+//         </div>
+//         <div className="mt-5 text-sm opacity-75">
+//           © 2024 AI PDF Chat Inc. All rights reserved. ChatGPT Writer
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default MainIntro10;
+
+
 import Image from "next/image";
 import logo from "../../public/group-551.svg";
 import icon1 from "../../public/frame4.svg";
@@ -193,18 +256,24 @@ const MainIntro10 = () => {
       {/* Gradient Section */}
       <div className="flex justify-center items-center relative z-10">
         <div className="bg-[linear-gradient(291.39deg,#0379FF_22.79%,#B74BDD_50%,#FF805F_77.21%)] 
-          w-[85%] rounded-3xl text-center p-10 shadow-lg">
-          <span className="text-white text-lg font-normal">✨ GET STARTED</span>
-          <h2 className="text-white text-3xl font-bold mt-2">Ready to try our AI PDF Chat?</h2>
-          <p className="text-white text-medium font-normal max-w-lg mx-auto mt-3">
+          w-[95%] sm:w-[85%] rounded-3xl text-center px-4 py-8 md:p-10 shadow-lg">
+          <span className="text-white text-base md:text-lg font-normal">✨ GET STARTED</span>
+          <h2 className="text-white text-xl md:text-3xl font-bold mt-2 px-4 md:px-0">
+            Ready to try our AI PDF Chat?
+          </h2>
+          <p className="text-white text-sm md:text-medium font-normal max-w-lg mx-auto mt-3">
             No time to read 50-page PDFs? Let our AI do it for you. Our smart AI reads the details
             so you don&apos;t have to. Summarize any PDF in seconds and get the key points fast.
           </p>
-          <div className="mt-5 space-x-4">
-            <button className="text-white bg-black rounded-xl px-6 py-2 font-medium text-lg hover:border-2 hover:border-black transition-all duration-300 ease-in-out transform hover:scale-105">
+          <div className="mt-5 flex flex-col md:flex-row gap-4 md:gap-0 md:space-x-4 justify-center">
+            <button className="text-white bg-black rounded-xl px-6 py-2 font-medium text-base md:text-lg 
+              hover:border-2 hover:border-black transition-all duration-300 ease-in-out transform 
+              hover:scale-105">
               View pricing
             </button>
-            <button className="text-white bg-gray-200 bg-opacity-15 px-6 py-2 text-lg border-2 rounded-xl hover:bg-opacity-20 transition-all duration-300 ease-in-out transform hover:scale-105">
+            <button className="text-white bg-gray-200 bg-opacity-15 px-6 py-2 text-base md:text-lg 
+              border-2 rounded-xl hover:bg-opacity-20 transition-all duration-300 ease-in-out 
+              transform hover:scale-105">
               Get started
             </button>
           </div>
@@ -212,27 +281,59 @@ const MainIntro10 = () => {
       </div>
 
       {/* Footer Section */}
-      <div className="bg-black text-white text-center pt-28 pb-10 mt-[-10%] relative z-0">
-        <div className="flex justify-center items-center pt-24 animate-fade-in-up">
-          <Image src={logo} alt="logo" width={50} height={50} className="transition-all duration-300 transform hover:scale-110" />
-          <span className="text-2xl font-semibold pl-2">aipdf.chat</span>
+      <div className="bg-black text-white text-center pt-28 pb-10 mt-[-80px] md:mt-[-10%] relative z-0">
+        <div className="flex justify-center items-center pt-16 animate-fade-in-up">
+          <Image 
+            src={logo} 
+            alt="logo" 
+            width={50} 
+            height={50} 
+            className="w-8 h-8 md:w-12 md:h-12 transition-all duration-300 transform hover:scale-110" 
+          />
+          <span className="text-xl md:text-2xl font-semibold pl-2">aipdf.chat</span>
         </div>
-        <div className="mt-6 space-x-8">
-          <a href="#" className="font-semibold tracking-wide hover:underline transition-all duration-300 ease-in-out transform hover:scale-105">Features</a>
-          <a href="#" className="font-semibold tracking-wide hover:underline transition-all duration-300 ease-in-out transform hover:scale-105">Use Case</a>
-          <a href="#" className="font-semibold tracking-wide hover:underline transition-all duration-300 ease-in-out transform hover:scale-105">Pricing</a>
-          <a href="#" className="font-semibold tracking-wide hover:underline transition-all duration-300 ease-in-out transform hover:scale-105">Affiliates</a>
+        
+        {/* Navigation Links */}
+        <div className="mt-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 px-4 justify-center">
+          <a href="#" className="font-semibold tracking-wide hover:underline transition-all 
+            duration-300 ease-in-out transform hover:scale-105 text-sm md:text-base">
+            Features
+          </a>
+          <a href="#" className="font-semibold tracking-wide hover:underline transition-all 
+            duration-300 ease-in-out transform hover:scale-105 text-sm md:text-base">
+            Use Case
+          </a>
+          <a href="#" className="font-semibold tracking-wide hover:underline transition-all 
+            duration-300 ease-in-out transform hover:scale-105 text-sm md:text-base">
+            Pricing
+          </a>
+          <a href="#" className="font-semibold tracking-wide hover:underline transition-all 
+            duration-300 ease-in-out transform hover:scale-105 text-sm md:text-base">
+            Affiliates
+          </a>
         </div>
-        <div className="flex justify-center items-center mt-6 space-x-4 animate-fade-in-up">
-          <Image src={icon1} alt="icon" className="hover:opacity-90 hover:cursor-pointer transition-all duration-300 transform hover:scale-110" width={30} height={30} />
-          <Image src={icon2} alt="icon" className="hover:opacity-90 hover:cursor-pointer transition-all duration-300 transform hover:scale-110" width={30} height={30} />
-          <Image src={icon3} alt="icon" className="hover:opacity-90 hover:cursor-pointer transition-all duration-300 transform hover:scale-110" width={30} height={30} />
-          <Image src={icon4} alt="icon" className="hover:opacity-90 hover:cursor-pointer transition-all duration-300 transform hover:scale-110" width={30} height={30} />
+
+        {/* Social Icons */}
+        <div className="flex justify-center items-center mt-6 space-x-4 animate-fade-in-up px-4">
+          <Image src={icon1} alt="icon" className="hover:opacity-90 hover:cursor-pointer 
+            transition-all duration-300 transform hover:scale-110 w-6 h-6 md:w-8 md:h-8" 
+          />
+          <Image src={icon2} alt="icon" className="hover:opacity-90 hover:cursor-pointer 
+            transition-all duration-300 transform hover:scale-110 w-6 h-6 md:w-8 md:h-8" 
+          />
+          <Image src={icon3} alt="icon" className="hover:opacity-90 hover:cursor-pointer 
+            transition-all duration-300 transform hover:scale-110 w-6 h-6 md:w-8 md:h-8" 
+          />
+          <Image src={icon4} alt="icon" className="hover:opacity-90 hover:cursor-pointer 
+            transition-all duration-300 transform hover:scale-110 w-6 h-6 md:w-8 md:h-8" 
+          />
         </div>
-        <div className="mt-10 opacity-35">
-          <hr className="border-white w-4/5 mx-auto transition-all duration-300 ease-in-out transform hover:scale-105" />
+
+        <div className="mt-10 opacity-35 px-4">
+          <hr className="border-white w-full md:w-4/5 mx-auto transition-all duration-300 ease-in-out" />
         </div>
-        <div className="mt-5 text-sm opacity-75">
+        
+        <div className="mt-5 text-xs sm:text-sm opacity-75 px-4">
           © 2024 AI PDF Chat Inc. All rights reserved. ChatGPT Writer
         </div>
       </div>

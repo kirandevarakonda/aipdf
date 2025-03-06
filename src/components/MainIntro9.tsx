@@ -14,7 +14,7 @@ const MainIntro9 = () => {
   const [button6,setButton6] = useState(true);
 
   return (
-    <div className="mt-20">
+    <div className="mt-14">
     <div className="flex justify-center items-center mb-4">
         <div className="border-2 rounded-lg flex flex-col min-w-[85%] max-w-[85%] p-4">
           <div className="flex justify-between items-center w-full">

@@ -225,12 +225,12 @@ export default async function Dashboard() {
   return (
     <div>
       <HeaderAuth />
-      <div className="max-w-4xl mx-auto pt-20 p-8 items-center">
-        <div className="flex items-center justify-center mb-8">
+      <div className="max-w-4xl mx-auto pt-20 pb-8 justify-center items-center">
+        <div className="flex-row justify-center mt-7 ml-52 mb-8">
           <FileUpload />
         </div>
 
-        <div className="rounded-md border">
+        <div className="rounded-md border p-5">
           <Table>
             <TableHeader className="bg-gray-50">
               <TableRow>
