@@ -359,7 +359,7 @@ export default function Topbar() {
           </button>
 
           {/* Logo (Centered) */}
-          <Link href="/" className="flex justify-start gap-3 mr-14">
+          <Link href="/" className="flex justify-start gap-3 mr-11">
             <AcmeLogo />
             <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer" />
           </Link>
