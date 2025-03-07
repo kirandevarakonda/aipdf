@@ -355,7 +355,7 @@ export default function Topbar() {
         <header className="container mx-auto flex justify-between items-center h-[70px] px-6">
           {/* Mobile Menu Button */}
           <button className="md:hidden" onClick={() => setSidebarOpen(true)}>
-            <Menu size={28} className="text-gray-700" />
+            <Menu size={28} className="text-gray-700 justify-start" />
           </button>
 
           {/* Logo (Centered) */}
