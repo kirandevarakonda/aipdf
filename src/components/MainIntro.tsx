@@ -339,7 +339,7 @@ import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const MainIntro = () => {
+const MainIntro = ({ isAuth }: { isAuth: boolean }) => {
   const { user, isLoaded } = useUser();
   const [chatCount, setChatCount] = useState<number | null>(null);
 
@@ -392,21 +392,43 @@ const MainIntro = () => {
             <FileUpload userId={user.id} />
           )
         ) : (
-          <div className="h-auto md:h-[366px] w-full border-4 border-inherit rounded-2xl bg-white bg-opacity-50 hover:border-customPurple hover:border-opacity-20 transition-transform transform hover:scale-105">
-            <Link href="/sign-in">
-              <div className="flex flex-col items-center justify-center bg-white w-full h-[200px] gap-4 border-2 border-dashed rounded-2xl mt-4 mx-auto md:w-[480px] hover:bg-gray-100 transition">
-                <Image
-                  src={vector}
-                  alt="pdf's image"
-                  className="w-16 h-16 md:w-20 md:h-20 transition-transform transform hover:scale-110"
-                />
-                <div className="text-center">
-                  <div className="text-lg md:text-xl font-semibold">Please Drop PDF Files</div>
-                  <div className="text-sm md:text-lg">or click to browse</div>
-                </div>
+          <div className="h-auto md:h-[366px] w-full border-4 border-inherit rounded-2xl bg-white bg-opacity-50 bg-inherit hover:border-customPurple hover:border-opacity-20 transition-transform transform hover:scale-105">
+          {/* Drag & Drop Box */}
+          <Link href="/sign-in">
+            <div className="flex flex-col items-center justify-center bg-white w-full h-[200px] gap-4 border-2 border-dashed rounded-2xl mt-4 mx-auto md:w-[480px] hover:bg-gray-100 transition">
+              <Image 
+                src={vector} 
+                alt="pdf's image" 
+                className="w-16 h-16 md:w-20 md:h-20 transition-transform transform hover:scale-110" 
+              />
+              <div className="text-center">
+                <div className="text-lg md:text-xl font-semibold">Please Drop PDF Files</div>
+                <div className="text-sm md:text-lg">or click to browse</div>
               </div>
-            </Link>
+            </div>
+          </Link>
+
+          {/* URL Input Section */}
+          <div className="p-4">
+            <div className="flex items-center">
+              <hr className="border-t-1 border-gray-300 w-[28%] my-8 mx-2 md:mx-6" />
+              <span className="font-medium text-gray-500 text-sm md:text-base">Or Paste an URL</span>
+              <hr className="border-t-1 border-gray-300 w-[28%] my-8 mx-2 md:mx-6" />
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                placeholder="https://youtu.be/abc?si=pqr"
+                className="border-2 border-solid border-gray-400 rounded-md w-full py-2 px-2 transition-transform transform focus:scale-105 focus:outline-none text-sm md:text-base"
+              />
+              <Link href="sign-in">
+                <Button className="px-4 py-2 text-white rounded-lg shadow-md hover:bg-violet-700 transition-transform transform hover:scale-105">
+                  Go
+                </Button>
+              </Link>
+            </div>
           </div>
+        </div>
         )}
       </div>
     </div>
