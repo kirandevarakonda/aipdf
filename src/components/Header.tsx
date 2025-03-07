@@ -359,7 +359,7 @@ export default function Topbar() {
           </button>
 
           {/* Logo (Centered) */}
-          <Link href="/" className="flex justify-start gap-3 mr-11">
+          <Link href="/" className="flex justify-start gap-3 mr-8">
             <AcmeLogo />
             <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer" />
           </Link>
@@ -374,7 +374,7 @@ export default function Topbar() {
           {/* Get Started Button (Visible on Desktop) */}
           <div className="md:flex">
             <Link href="/sign-in">
-              <button className="px-5 py-2 bg-customPurple text-white rounded-lg shadow-md hover:bg-blue-500 transition">
+              <button className="pr-5 py-2 bg-customPurple text-white rounded-lg shadow-md hover:bg-blue-500 transition">
                 Get Started
               </button>
             </Link>
