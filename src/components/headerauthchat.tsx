@@ -14,14 +14,14 @@ export default function HeaderAuthChat({ isSidebar = false }: { isSidebar?: bool
           <div className={`${isSidebar ? "flex flex-col items-start p-4 gap-4" : "container mx-auto flex justify-evenly items-center pr-8"}`}>
             {!isSidebar && (
               <Link href="/">
-              <div className="flex items-center gap-3 mr-14">
+              <div className="flex items-center gap-3 mr-11">
                 <AcmeLogo/>
                 <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer"/>
               </div>
               </Link>
             )}
             
-            <div className={isSidebar ? " w-full" : "flex items-center"}>
+            <div className={isSidebar ? " transition-transform w-full" : "flex items-center"}>
               <nav className={`${isSidebar ? "flex flex-col space-y-4" : "hidden m-6 md:flex space-x-6"} text-gray-700 font-medium`}>
                 <Link href="/my-documents" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Documents</Link>
                 <Link href="/my-chats" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Chats</Link>

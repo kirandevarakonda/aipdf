@@ -318,10 +318,20 @@ import MainIntro10 from "@/components/MainIntro10";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { auth } from "@clerk/nextjs/server";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+
   const { user, isLoaded } = useUser();
   const [chatsList, setChatsList] = useState<any[]>([]);
+  const { userId } = auth();
+  
+  if (!userId) {
+    return redirect("/sign-in");
+  }
+
+  const _chats = await db.select().from(chats).where(eq(chats.userId, userId));
+ 
 
   useEffect(() => {
     if (user?.id) {
@@ -338,6 +348,7 @@ export default function Dashboard() {
     }
   }, [user?.id]);
 
+
   if (!isLoaded) return <p>Loading...</p>;
   if (!user?.id) return redirect("/sign-in");
 
@@ -352,8 +363,8 @@ export default function Dashboard() {
         </div>
 
         {/* Responsive Table */}
-        <div className="rounded-md border p-5 w-full overflow-x-auto">
-          <Table className="hidden md:table">
+        <div className="rounded-md border p-5">
+          <Table>
             <TableHeader className="bg-gray-50">
               <TableRow>
                 <TableHead className="w-[60%]">Document</TableHead>
@@ -362,14 +373,14 @@ export default function Dashboard() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {chatsList.length === 0 ? (
+              {_chats.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={3} className="h-24 text-center">
                     No documents uploaded yet
                   </TableCell>
                 </TableRow>
               ) : (
-                chatsList.map((chat) => (
+                _chats.map((chat) => (
                   <TableRow key={chat.id} className="group hover:bg-gray-50">
                     <TableCell>
                       <Link
@@ -409,60 +420,8 @@ export default function Dashboard() {
               )}
             </TableBody>
           </Table>
-
-          {/* Mobile View - List Format */}
-          <div className="md:hidden">
-            {chatsList.length === 0 ? (
-              <p className="text-center text-gray-500">No documents uploaded yet</p>
-            ) : (
-              chatsList.map((chat) => (
-                <div
-                  key={chat.id}
-                  className="border rounded-lg p-4 mb-4 shadow-sm bg-gray-50"
-                >
-                  <Link href={`/chat/${chat.id}`} className="block">
-                    <div className="flex items-center">
-                      <File className="h-5 w-5 text-gray-400 mr-2" />
-                      <span className="font-medium text-gray-700">
-                        {chat.pdfName}
-                      </span>
-                    </div>
-                  </Link>
-                  <div className="flex justify-between mt-2">
-                    <span
-                      className={`text-sm font-medium flex items-center ${
-                        chat.status === "processing" ? "text-yellow-600" : "text-green-600"
-                      }`}
-                    >
-                      {chat.status === "processing" ? (
-                        <>
-                          <Clock className="h-4 w-4 mr-1" />
-                          Processing
-                        </>
-                      ) : (
-                        <>
-                          <CheckCircle2 className="h-4 w-4 mr-1" />
-                          Ready
-                        </>
-                      )}
-                    </span>
-                    <span className="text-sm text-gray-500">
-                      {chat.createdAt
-                        ? new Date(chat.createdAt).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })
-                        : "Unknown"}
-                    </span>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
         </div>
       </div>
-
       <MainIntro10 />
     </div>
   );
