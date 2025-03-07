@@ -709,7 +709,8 @@ async function createDeepseekStream(userQuestion: string, chatId: number, contex
             3. If page numbers exist in context, add "Pages: X, Y" at the end
             4. Never mention previous questions/answers
             5. Respond in markdown with clear formatting
-            6. If information isn't found, say "Not mentioned in document"`,
+            6. When asked summarize the pdf, Must give the summary of the pdf 
+            7. If information isn't found, say "Not mentioned in document"`,
           },
           { role: "user", content: userQuestion }
         ],

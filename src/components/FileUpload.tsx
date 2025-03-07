@@ -45,116 +45,301 @@
 
 
 //previous code
+// "use client";
+// import { useState } from "react";
+// import { useDropzone } from "react-dropzone";
+// import { Inbox, Loader2 } from "lucide-react";
+// import { toast } from "react-hot-toast";
+// import { storage } from "@/firebase";
+// import { ref, uploadBytesResumable, getDownloadURL, UploadTaskSnapshot } from "firebase/storage";
+// import { useMutation } from "@tanstack/react-query";
+// import axios from 'axios'
+// import { v4 as uuidv4 } from 'uuid';
+// import { useRouter } from "next/navigation";
+// import Image from "next/image";
+// import vector from "../../public/vector.svg";
+// import type { ChatStatusResponse } from "../lib/db/index"; 
+// import { Button } from "./ui/button";
+
+
+// const FileUpload = () => {
+//     const [uploading, setUploading] = useState(false);
+//     const [storeUrl, setStoreUrl] = useState("");
+//     const router = useRouter();
+
+//     const { mutate, isPending } = useMutation({
+//         mutationFn: async ({
+//             storeUrl,
+//             file_key,
+//             file_name
+//         }: {
+//             storeUrl: string;
+//             file_key: string;
+//             file_name: string;
+//         }) => {
+//             const response = await axios.post("/api/create-chat", {
+//                 storeUrl, file_key, file_name
+//             });
+
+//             console.log(response.data);
+
+//             return response.data;
+//         },
+//     });
+
+//     const { getRootProps, getInputProps } = useDropzone({
+//         accept: { "application/pdf": [".pdf"] },
+//         maxFiles: 1,
+//         onDrop: async (acceptedFiles) => {
+//             const file = acceptedFiles[0];
+//             const file_key = uuidv4().toString();
+//             const storageRef = ref(storage, `pdf/${file_key}_${file.name}`);
+
+//             if (file.size > 10 * 1024 * 1024) {
+//                 toast.error("File too large");
+//                 return;
+//             }
+
+//             try {
+//                 setUploading(true);
+//                 const uploadTask = uploadBytesResumable(storageRef, file);
+
+//                 uploadTask.on(
+//                     "state_changed",
+//                     (snapshot: UploadTaskSnapshot) => {
+//                         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//                         // You can use this progress value to update a progress bar if needed
+//                     },
+//                     (error) => {
+//                         console.error("Upload failed:", error);
+//                         toast.error("Upload failed. Please try again.");
+//                         setUploading(false);
+//                     },
+//                 );
+
+//                 await uploadTask;
+
+//                 const url = await getDownloadURL(ref(storage, `pdf/${file_key}_${file.name}`));
+//                 setStoreUrl(url);
+
+//                 toast.success("File uploaded successfully!");
+
+//                 if (!file.name || !file_key) {
+//                     toast("Something went wrong in fileupload");
+//                     return;
+//                 }
+
+//                 // Now that we have the URL, we can call mutate
+//                 mutate(
+//                     { storeUrl: url, file_key, file_name: file.name },  // Use the URL directly instead of the state
+//                     {
+//                         onSuccess: ({ chat_id }) => {
+//                             console.log(chat_id);
+//                             toast.success("Chat created!");
+//                             router.push(`/chat/${chat_id}`);
+//                         },
+//                         onError: (err) => {
+//                             toast.error("Error creating chat");
+//                             console.error(err);
+//                         },
+//                     }
+//                 );
+//             } catch (error) {
+//                 console.error("Error during file upload:", error);
+//                 toast.error("An error occurred. Please try again.");
+//             } finally {
+//                 setUploading(false);
+//             }
+//         },
+//     });
+
+//     return (
+//       <div className="transition-all duration-700 ease-in-out transform w-full">
+//       <div className="h-auto md:h-[366px] w-full max-w-[520px] border-4 border-inherit rounded-2xl bg-white bg-opacity-50 bg-inherit hover:border-customPurple hover:border-opacity-20 transition-transform transform hover:scale-105">
+//         <div
+//           {...getRootProps({
+//             className:
+//               "flex items-center bg-white w-full md:w-[480px] h-[200px] justify-center gap-4 border-2 border-dashed rounded-2xl mt-4 mx-auto hover:bg-gray-100 transition cursor-pointer",
+//           })}
+//         >
+//           <input {...getInputProps()} />
+//           {uploading || isPending ? (
+//             <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
+//           ) : (
+//             <>
+//               <Image src={vector} alt="pdf's image" className="" />
+//               <div>
+//                 <div className="text-xl font-semibold">Please Drop PDF Files</div>
+//                 <div className="text-lg">or click to browse</div>
+//               </div>
+//             </>
+//           )}
+//         </div>
+
+//         <div className="flex flex-col items-center p-4">
+//         <div className="flex items-center w-full">
+//         <hr className="border-t-1 border-gray-300 flex-1" />
+//         <span className="font-medium text-gray-500 px-2 text-sm md:text-base whitespace-nowrap">
+//           Or Paste an URL
+//         </span>
+//         <hr className="border-t-1 border-gray-300 flex-1" />
+//       </div>
+//           <div className="flex items-center w-full gap-2 pt-6">
+//             <input
+//               type="text"
+//               placeholder="https://youtu.be/abc?si=pqr"
+//               className="border-2 border-solid border-gray-400 rounded-md w-full py-2 px-2 text-sm md:text-base"
+//             />
+//             <Button className="px-4 py-2 text-white rounded-lg shadow-md hover:bg-violet-700">
+//               Go
+//             </Button>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default FileUpload;
+
+
+
+//chatcount
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import { Inbox, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { storage } from "@/firebase";
-import { ref, uploadBytesResumable, getDownloadURL, UploadTaskSnapshot } from "firebase/storage";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useMutation } from "@tanstack/react-query";
-import axios from 'axios'
-import { v4 as uuidv4 } from 'uuid';
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import vector from "../../public/vector.svg";
-import type { ChatStatusResponse } from "../lib/db/index"; 
 import { Button } from "./ui/button";
 
+const FileUpload = ({ userId }: { userId: string }) => {
+  const [uploading, setUploading] = useState(false);
+  const [storeUrl, setStoreUrl] = useState("");
+  const [chatCount, setChatCount] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-const FileUpload = () => {
-    const [uploading, setUploading] = useState(false);
-    const [storeUrl, setStoreUrl] = useState("");
-    const router = useRouter();
+  // Fetch user's chat count
+  useEffect(() => {
+    const fetchChatCount = async () => {
+      try {
+        const response = await axios.get(`/api/chat-count?userId=${userId}`);
+        setChatCount(response.data.count);
+      } catch (error) {
+        console.error("Error fetching chat count:", error);
+        toast.error("Failed to fetch chat count.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: async ({
-            storeUrl,
-            file_key,
-            file_name
-        }: {
-            storeUrl: string;
-            file_key: string;
-            file_name: string;
-        }) => {
-            const response = await axios.post("/api/create-chat", {
-                storeUrl, file_key, file_name
-            });
+    fetchChatCount();
+  }, [userId]);
 
-            console.log(response.data);
+  const { mutate, isPending } = useMutation({
+    mutationFn: async ({ storeUrl, file_key, file_name }: { storeUrl: string; file_key: string; file_name: string }) => {
+      const response = await axios.post("/api/create-chat", {
+        storeUrl,
+        file_key,
+        file_name,
+      });
 
-            return response.data;
-        },
-    });
+      return response.data;
+    },
+  });
 
-    const { getRootProps, getInputProps } = useDropzone({
-        accept: { "application/pdf": [".pdf"] },
-        maxFiles: 1,
-        onDrop: async (acceptedFiles) => {
-            const file = acceptedFiles[0];
-            const file_key = uuidv4().toString();
-            const storageRef = ref(storage, `pdf/${file_key}_${file.name}`);
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: { "application/pdf": [".pdf"] },
+    maxFiles: 1,
+    onDrop: async (acceptedFiles) => {
+      if (chatCount !== null && chatCount >= 3) {
+        toast.error("Chat limit reached. Upgrade to continue.");
+        return;
+      }
 
-            if (file.size > 10 * 1024 * 1024) {
-                toast.error("File too large");
-                return;
-            }
+      const file = acceptedFiles[0];
+      const file_key = uuidv4().toString();
+      const storageRef = ref(storage, `pdf/${file_key}_${file.name}`);
 
-            try {
-                setUploading(true);
-                const uploadTask = uploadBytesResumable(storageRef, file);
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error("File too large (Max: 10MB)");
+        return;
+      }
 
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot: UploadTaskSnapshot) => {
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        // You can use this progress value to update a progress bar if needed
-                    },
-                    (error) => {
-                        console.error("Upload failed:", error);
-                        toast.error("Upload failed. Please try again.");
-                        setUploading(false);
-                    },
-                );
+      try {
+        setUploading(true);
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
-                await uploadTask;
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(`Upload is ${progress}% done`);
+          },
+          (error) => {
+            console.error("Upload failed:", error);
+            toast.error("Upload failed. Please try again.");
+            setUploading(false);
+          }
+        );
 
-                const url = await getDownloadURL(ref(storage, `pdf/${file_key}_${file.name}`));
-                setStoreUrl(url);
+        await uploadTask;
+        const url = await getDownloadURL(ref(storage, `pdf/${file_key}_${file.name}`));
+        setStoreUrl(url);
+        toast.success("File uploaded successfully!");
 
-                toast.success("File uploaded successfully!");
+        mutate(
+          { storeUrl: url, file_key, file_name: file.name },
+          {
+            onSuccess: ({ chat_id }) => {
+              toast.success("Chat created!");
+              router.push(`/chat/${chat_id}`);
+            },
+            onError: (err) => {
+              toast.error("Error creating chat");
+              console.error(err);
+            },
+          }
+        );
+      } catch (error) {
+        console.error("Error during file upload:", error);
+        toast.error("An error occurred. Please try again.");
+      } finally {
+        setUploading(false);
+      }
+    },
+  });
 
-                if (!file.name || !file_key) {
-                    toast("Something went wrong in fileupload");
-                    return;
-                }
-
-                // Now that we have the URL, we can call mutate
-                mutate(
-                    { storeUrl: url, file_key, file_name: file.name },  // Use the URL directly instead of the state
-                    {
-                        onSuccess: ({ chat_id }) => {
-                            console.log(chat_id);
-                            toast.success("Chat created!");
-                            router.push(`/chat/${chat_id}`);
-                        },
-                        onError: (err) => {
-                            toast.error("Error creating chat");
-                            console.error(err);
-                        },
-                    }
-                );
-            } catch (error) {
-                console.error("Error during file upload:", error);
-                toast.error("An error occurred. Please try again.");
-            } finally {
-                setUploading(false);
-            }
-        },
-    });
-
+  if (loading) {
     return (
-      <div className="transition-all duration-700 ease-in-out transform w-full">
+      <div className="p-6 text-center">
+        <Loader2 className="h-10 w-10 text-blue-500 animate-spin mx-auto" />
+        <p className="mt-2 text-gray-600">Checking chat limit...</p>
+      </div>
+    );
+  }
+
+  if (chatCount !== null && chatCount >= 3) {
+    return (
+      <div className="p-6 border border-red-500 bg-red-100 rounded-lg text-center">
+        <p className="text-lg font-semibold text-red-600">
+          You have reached the chat limit. Upgrade to continue.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="transition-all duration-700 ease-in-out transform w-full">
       <div className="h-auto md:h-[366px] w-full max-w-[520px] border-4 border-inherit rounded-2xl bg-white bg-opacity-50 bg-inherit hover:border-customPurple hover:border-opacity-20 transition-transform transform hover:scale-105">
         <div
           {...getRootProps({
@@ -167,7 +352,7 @@ const FileUpload = () => {
             <Loader2 className="h-10 w-10 p-10 text-blue-500 animate-spin" />
           ) : (
             <>
-              <Image src={vector} alt="pdf's image" className="" />
+              <Image src={vector} alt="pdf's image" />
               <div>
                 <div className="text-xl font-semibold">Please Drop PDF Files</div>
                 <div className="text-lg">or click to browse</div>
@@ -177,13 +362,13 @@ const FileUpload = () => {
         </div>
 
         <div className="flex flex-col items-center p-4">
-        <div className="flex items-center w-full">
-        <hr className="border-t-1 border-gray-300 flex-1" />
-        <span className="font-medium text-gray-500 px-2 text-sm md:text-base whitespace-nowrap">
-          Or Paste an URL
-        </span>
-        <hr className="border-t-1 border-gray-300 flex-1" />
-      </div>
+          <div className="flex items-center w-full">
+            <hr className="border-t-1 border-gray-300 flex-1" />
+            <span className="font-medium text-gray-500 px-2 text-sm md:text-base whitespace-nowrap">
+              Or Paste an URL
+            </span>
+            <hr className="border-t-1 border-gray-300 flex-1" />
+          </div>
           <div className="flex items-center w-full gap-2 pt-6">
             <input
               type="text"

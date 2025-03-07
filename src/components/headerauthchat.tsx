@@ -21,7 +21,7 @@ export default function HeaderAuthChat({ isSidebar = false }: { isSidebar?: bool
               </Link>
             )}
             
-            <div className={isSidebar ? "w-full" : "flex items-center"}>
+            <div className={isSidebar ? " w-full" : "flex items-center"}>
               <nav className={`${isSidebar ? "flex flex-col space-y-4" : "hidden m-6 md:flex space-x-6"} text-gray-700 font-medium`}>
                 <Link href="/my-documents" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Documents</Link>
                 <Link href="/my-chats" className="text-black font-semibold tracking-wide hover:font-bold hover:underline">My Chats</Link>

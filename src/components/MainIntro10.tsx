@@ -249,6 +249,7 @@ import icon1 from "../../public/frame4.svg";
 import icon2 from "../../public/frame5.svg";
 import icon3 from "../../public/frame6.svg";
 import icon4 from "../../public/frame7.svg";
+import Link from "next/link";
 
 const MainIntro10 = () => {
   return (
@@ -266,16 +267,20 @@ const MainIntro10 = () => {
             so you don&apos;t have to. Summarize any PDF in seconds and get the key points fast.
           </p>
           <div className="mt-5 flex flex-col md:flex-row gap-4 md:gap-0 md:space-x-4 justify-center">
+            <Link href="/pricing">
             <button className="text-white bg-black rounded-xl px-6 py-2 font-medium text-base md:text-lg 
               hover:border-2 hover:border-black transition-all duration-300 ease-in-out transform 
               hover:scale-105">
               View pricing
             </button>
+            </Link>
+            <Link href="/sign-in">
             <button className="text-white bg-gray-200 bg-opacity-15 px-6 py-2 text-base md:text-lg 
               border-2 rounded-xl hover:bg-opacity-20 transition-all duration-300 ease-in-out 
               transform hover:scale-105">
               Get started
             </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -303,7 +308,7 @@ const MainIntro10 = () => {
             duration-300 ease-in-out transform hover:scale-105 text-sm md:text-base">
             Use Case
           </a>
-          <a href="#" className="font-semibold tracking-wide hover:underline transition-all 
+          <a href="/pricing" className="font-semibold tracking-wide hover:underline transition-all 
             duration-300 ease-in-out transform hover:scale-105 text-sm md:text-base">
             Pricing
           </a>

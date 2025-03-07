@@ -430,7 +430,7 @@ export default function ChatPageContent({ chatId, initialChatsData }: ChatPageCo
     return (
         <div className="h-full flex flex-col">
             {/* Main Header - App specific header, not the main site header */}
-            <header className="h-16 border-b flex items-center px-6 bg-white">
+            <header className="h-16 border-b flex items-center px-6 bg-white sticky">
                 <div className="flex items-center gap-4">
                     <Button
                         variant="ghost"
@@ -440,7 +440,7 @@ export default function ChatPageContent({ chatId, initialChatsData }: ChatPageCo
                     >
                         <Menu className="h-5 w-5 text-gray-600" />
                     </Button>
-                    <Link href="/" className="flex items-center gap-5 pl-16">
+                    <Link href="/" className="flex items-center gap-5 pl-1">
                     <AcmeLogo />
                     <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer" />
                 </Link>
