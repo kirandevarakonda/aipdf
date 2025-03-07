@@ -14,7 +14,7 @@ export default function HeaderAuthChat({ isSidebar = false }: { isSidebar?: bool
           <div className={`${isSidebar ? "flex flex-col items-start p-4 gap-4" : "container mx-auto flex justify-evenly items-center pr-8"}`}>
             {!isSidebar && (
               <Link href="/">
-              <div className="flex items-center gap-3 ">
+              <div className="flex items-center gap-3 mr-14">
                 <AcmeLogo/>
                 <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer"/>
               </div>
