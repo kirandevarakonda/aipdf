@@ -227,7 +227,7 @@ export default async function Dashboard() {
       <HeaderAuth />
       <div className="max-w-4xl mx-auto pt-20 pb-8 justify-center items-center">
         <div className="flex-row justify-center mt-7 mb-8">
-          <FileUpload userId={`${chats.userId}`}/>
+          <FileUpload userId={`${userId}`}/>
         </div>
 
         <div className="rounded-md border p-5">

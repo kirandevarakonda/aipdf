@@ -269,7 +269,7 @@ export default function HeaderAuth() {
           </button>
 
           {/* Logo (Always Visible) */}
-          <Link href="/" className="flex items-center gap-5 pl-8">
+          <Link href="/" className="flex items-center gap-3 pl-8">
             <AcmeLogo />
             <Image src={aipdfchat} alt="logo" width={120} height={40} className="hover:cursor-pointer" />
           </Link>

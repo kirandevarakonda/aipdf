@@ -220,6 +220,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import vector from "../../public/vector.svg";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 const FileUpload = ({ userId }: { userId: string }) => {
   const [uploading, setUploading] = useState(false);
@@ -333,7 +334,7 @@ const FileUpload = ({ userId }: { userId: string }) => {
     return (
       <div className="p-6 border border-red-500 bg-red-100 rounded-lg text-center">
         <p className="text-lg font-semibold text-red-600">
-          You have reached the chat limit. Upgrade to continue.
+          You have reached the chat limit. <Link href="/pricing">Upgrade</Link>  to continue.
         </p>
       </div>
     );
