@@ -334,7 +334,7 @@ const FileUpload = ({ userId }: { userId: string }) => {
     return (
       <div className="p-6 border border-red-500 bg-red-100 rounded-lg text-center">
         <p className="text-lg font-semibold text-red-600">
-          You have reached the chat limit. <Link href="/pricing">Upgrade</Link>  to continue.
+          You have reached the chat limit. <Link href="/pricing" className="underline font-semibold">Upgrade</Link>  to continue.
         </p>
       </div>
     );

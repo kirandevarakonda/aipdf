@@ -386,7 +386,7 @@ const MainIntro = ({ isAuth }: { isAuth: boolean }) => {
           chatCount !== null && chatCount >= 3 ? (
             <div className="h-auto md:h-[366px] w-full border-4 border-gray-800 rounded-2xl bg-white bg-opacity-50 p-6 text-center text-red-600 font-bold">
               You have exceeded your limit. <br />
-              Please upgrade if you want to continue.
+              Please <Link href="/pricing" className="underline">upgrade</Link> if you want to continue.
             </div>
           ) : (
             <FileUpload userId={user.id} />
