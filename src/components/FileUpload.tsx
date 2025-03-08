@@ -283,6 +283,7 @@ const FileUpload = ({ userId }: { userId: string }) => {
           "state_changed",
           (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            
             console.log(`Upload is ${progress}% done`);
           },
           (error) => {
@@ -322,7 +323,7 @@ const FileUpload = ({ userId }: { userId: string }) => {
   if (loading) {
     return (
       <div className="p-6 text-center">
-        <Loader2 className="h-10 w-10 text-blue-500 animate-spin mx-auto" />
+        <Loader2 className="h-10 w-10 text-purple-600 animate-spin mx-auto" />
         <p className="mt-2 text-gray-600">Checking chat limit...</p>
       </div>
     );
@@ -349,7 +350,7 @@ const FileUpload = ({ userId }: { userId: string }) => {
         >
           <input {...getInputProps()} />
           {uploading || isPending ? (
-            <Loader2 className="h-10 w-10 p-10 text-blue-500 animate-spin" />
+            <Loader2 className="h-10 w-10 p-10 z-50 text-purple-600 animate-spin" />
           ) : (
             <>
               <Image src={vector} alt="pdf's image" />
